@@ -1,5 +1,5 @@
 package SpringMVC.Entity;
 
-public class Admin {
+public class User {
 
 }
