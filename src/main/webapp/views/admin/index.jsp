@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -33,77 +34,29 @@
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1" aria-sort="ascending">ID thể loại</th>
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1" aria-sort="ascending">T&#234;n
-										thể loại</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1" aria-sort="ascending">Ng&#224;y
-										tạo</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1" aria-sort="ascending">Ng&#224;y
-										cập nhật</th>
+										rowspan="1" colspan="1" aria-sort="ascending">Tên thể
+										loại</th>
 									<th>Công cụ</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th rowspan="1" colspan="1">ID thể loại</th>
-									<th rowspan="1" colspan="1">T&#234;n thể loại</th>
-									<th rowspan="1" colspan="1">Ng&#224;y tạo</th>
-									<th rowspan="1" colspan="1">Ng&#224;y cập nhật</th>
+									<th rowspan="1" colspan="1">Tên thể loại</th>
 									<th rowspan="1" colspan="1">Công cụ</th>
 								</tr>
 							</tfoot>
 							<tbody>
-								<tr role="row">
-									<td>1</td>
-									<td>Khoa học</td>
-									<td>5/29/2021 9:24:05 PM</td>
-									<td>6/5/2021 3:00:51 PM</td>
-									<td><a href="/admin/category-management/edit/1">Chỉnh
-											sửa</a> | <a href="/admin/category-management/details/1">Xem
-											chi tiết</a> | <a href="/admin/category-management/delete/1">X&#243;a</a>
-									</td>
-								</tr>
-								<tr role="row">
-									<td>3</td>
-									<td>Văn học nước ngo&#224;i</td>
-									<td>6/5/2021 3:02:37 PM</td>
-									<td>6/5/2021 3:02:37 PM</td>
-									<td><a href="/admin/category-management/edit/3">Chỉnh
-											sửa</a> | <a href="/admin/category-management/details/3">Xem
-											chi tiết</a> | <a href="/admin/category-management/delete/3">X&#243;a</a>
-									</td>
-								</tr>
-								<tr role="row">
-									<td>4</td>
-									<td>Trinh th&#225;m</td>
-									<td>6/21/2021 8:35:58 PM</td>
-									<td>6/21/2021 8:35:58 PM</td>
-									<td><a href="/admin/category-management/edit/4">Chỉnh
-											sửa</a> | <a href="/admin/category-management/details/4">Xem
-											chi tiết</a> | <a href="/admin/category-management/delete/4">X&#243;a</a>
-									</td>
-								</tr>
-								<tr role="row">
-									<td>5</td>
-									<td>H&#236;nh sự</td>
-									<td>6/21/2021 8:40:53 PM</td>
-									<td>6/21/2021 8:56:22 PM</td>
-									<td><a href="/admin/category-management/edit/5">Chỉnh
-											sửa</a> | <a href="/admin/category-management/details/5">Xem
-											chi tiết</a> | <a href="/admin/category-management/delete/5">X&#243;a</a>
-									</td>
-								</tr>
-								<tr role="row">
-									<td>7</td>
-									<td>Văn học Việt Nam</td>
-									<td>6/22/2021 9:06:35 PM</td>
-									<td>6/22/2021 9:06:35 PM</td>
-									<td><a href="/admin/category-management/edit/7">Chỉnh
-											sửa</a> | <a href="/admin/category-management/details/7">Xem
-											chi tiết</a> | <a href="/admin/category-management/delete/7">X&#243;a</a>
-									</td>
-								</tr>
+								<c:forEach var="item" items="${ categories }">
+									<tr role="row">
+										<td>${ item.ID }</td>
+										<td>${ item.name }</td>
+										<td><a href="/admin/category-management/edit/1">Chỉnh
+												sửa</a> | <a href="/admin/category-management/details/1">Xem
+												chi tiết</a> | <a href="/admin/category-management/delete/1">X&#243;a</a>
+										</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
