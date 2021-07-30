@@ -31,6 +31,7 @@ public class CategoryDAO {
 	}
 	
 	public boolean CreateCategory(Category category) {
+		
 		return true;
 	}
 }
