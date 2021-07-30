@@ -14,6 +14,13 @@
 		<property name="prefix" value="/views/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	
+	<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+		<property name="url" value="jdbc:sqlserver://localhost:1433;databaseName="></property>
+		<property name="username" value="sa"></property>
+		<property name="password" value="123456789"></property>
+	</bean>
 
 	<mvc:annotation-driven />
 	<mvc:resources location="/assets/" mapping="/assets/**" />
