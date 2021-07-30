@@ -14,4 +14,11 @@ public class HomeController {
 		modelAndView.setViewName("user/index");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = {"/quan-tri/overview"}, method = RequestMethod.GET)
+	public ModelAndView Admin() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin/index");
+		return modelAndView;
+	}
 }
