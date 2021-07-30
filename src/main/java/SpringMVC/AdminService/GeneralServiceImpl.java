@@ -1,5 +1,5 @@
 package SpringMVC.AdminService;
 
-public class GeneralServiceImpl {
+public class GeneralServiceImpl implements IGeneralService {
 
 }

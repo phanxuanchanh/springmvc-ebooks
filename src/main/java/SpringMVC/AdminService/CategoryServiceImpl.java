@@ -20,5 +20,17 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Category GetCategory(int id) {
 		return categoryDAO.GetCategory(id);
 	}
+
+	public boolean CreateCategory(Category category) {
+		return categoryDAO.CreateCategory(category);
+	}
+
+	public boolean UpdateCategory(Category category) {
+		return categoryDAO.UpdateCategory(category);
+	}
+
+	public boolean DeleteCategory(int id) {
+		return categoryDAO.DeleteCategory(id);
+	}
 	
 }
