@@ -29,20 +29,20 @@
 <link rel="stylesheet" href="<c:url value="/assets/user/jquery-ui/jquery-ui.min.css"></c:url>">
 
 <!-- Demo Purpose Only. Should be removed in production -->
-<link rel="stylesheet" href="<c:url value="/user_assets/css/config.css"></c:url>">
+<link rel="stylesheet" href="<c:url value="/assets/user/css/config.css"></c:url>">
 
 
-<link href="<c:url value="/user_assets/css/green.css"></c:url>" rel="alternate stylesheet"
+<link href="<c:url value="/assets/user/css/green.css"></c:url>" rel="alternate stylesheet"
 	title="Green color">
-<link href="<c:url value="/user_assets/css/pink.css"></c:url>" rel="alternate stylesheet"
+<link href="<c:url value="/assets/user/css/pink.css"></c:url>" rel="alternate stylesheet"
 	title="Pink color">
-<link href="<c:url value="/user_assets/css/blue.css"></c:url>" rel="alternate stylesheet"
+<link href="<c:url value="/assets/user/css/blue.css"></c:url>" rel="alternate stylesheet"
 	title="Blue color">
-<link href="<c:url value="/user_assets/css/red.css"></c:url>" rel="alternate stylesheet"
+<link href="<c:url value="/assets/user/css/red.css"></c:url>" rel="alternate stylesheet"
 	title="Red color">
-<link href="<c:url value="/user_assets/css/orange.css"></c:url>" rel="alternate stylesheet"
+<link href="<c:url value="/assets/user/css/orange.css"></c:url>" rel="alternate stylesheet"
 	title="Orange color">
-<link href="<c:url value="/user_assets/css/dark-green.css"></c:url>" rel="alternate stylesheet"
+<link href="<c:url value="/assets/user/css/dark-green.css"></c:url>" rel="alternate stylesheet"
 	title="Dark Green color">
 <!-- Demo Purpose Only. Should be removed in production : END -->
 <!-- Fonts -->
@@ -52,16 +52,11 @@
 
 <!-- Icons/Glyphs -->
 <link rel="stylesheet"
-	href="/user_assets/elegant-fonts/css/elegant-fonts.css">
+	href="<c:url value="/assets/user/elegant-fonts/css/elegant-fonts.css"></c:url>">
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="/user_assets/images/favicon.ico">
+<link rel="shortcut icon" href="<c:url value="/assets/user/images/favicon.ico"></c:url>">
 
-<!-- HTML5 elements and media queries Support for IE8 : HTML5 shim and Respond.js -->
-<!--[if lt IE 9]>
-    <script src="~/user_assets/js/html5shiv.js"></script>
-    <script src="~/user_assets/js/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 
@@ -75,7 +70,7 @@
 
 			<a class="scrollup hidden-xs hidden-sm" href="#"
 				style="display: none;"><img
-				src="/user_assets/images/top-scroll.png" alt=""></a>
+				src="<c:url value="/assets/user/images/top-scroll.png"></c:url>" alt=""></a>
 		</div>
 
 		<!-- ============================================================= FOOTER ============================================================= -->
@@ -108,21 +103,21 @@
 	<!-- JavaScripts placed at the end of the document so the pages load faster -->
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
-	<script src="/user_assets/jquery/jquery-1.12.1.min.js"></script>
-	<script src="/user_assets/boostrap/js/bootstrap.min.js"></script>
+	<script src="<c:url value="/assets/user/jquery/jquery-1.12.1.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/bootstrap/js/bootstrap.min.js"></c:url>"></script>
 	<script
-		src="/user_assets/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
-	<script src="/user_assets/echo/echo.min.js"></script>
-	<script src="/user_assets/jquery-easing/jquery.easing.min.js"></script>
-	<script src="/user_assets/owl/owl.carousel.min.js"></script>
-	<script src="/user_assets/wow/wow.min.js"></script>
-	<script src="/user_assets/bootstrap-select/js/bootstrap-select.min.js"></script>
-	<script src="/user_assets/jquery-ui/jquery-ui.min.js"></script>
-	<script src="/user_assets/js/scripts.js"></script>
+		src="<c:url value="/assets/user/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/echo/echo.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/jquery-easing/jquery.easing.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/owl/owl.carousel.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/wow/wow.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/bootstrap-select/js/bootstrap-select.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/jquery-ui/jquery-ui.min.js"></c:url>"></script>
+	<script src="<c:url value="/assets/user/js/scripts.js"></c:url>"></script>
 
 	<!-- For demo purposes – can be removed on production -->
 
-	<script src="/user_assets/js/switchstylesheet.js"></script>
+	<script src="<c:url value="/assets/user/js/switchstylesheet.js"></c:url>"></script>
 
 	<script>
 		$(document).ready(function() {
