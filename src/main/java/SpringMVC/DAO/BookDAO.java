@@ -1,5 +1,57 @@
 package SpringMVC.DAO;
 
-public class BookDAO {
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import SpringMVC.Entity.Book;
+import SpringMVC.Entity.BookMapper;
+
+@Repository
+public class BookDAO {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public List<Book> GetBooks() {
+		List<Book> books = new ArrayList<Book>();
+		String query = "Select * from Book";
+		books = jdbcTemplate.query(query, new BookMapper());
+		return books;
+	}
+
+	public Book GetBook(long id) {
+		Book book = null;
+		String query = "Select * from Book where Id = ?";
+		book = jdbcTemplate.queryForObject(query, new Object[] { id }, new BookMapper());
+		return book;
+	}
+
+	public boolean CreateBook(Book book) {
+		String query = "Insert into Book(name, description, categoryId, publishingHouseId, views, upvote, downvote, pdf, img) values(?, ?, ?, ?, 0, 0, 0, ?, ?)";
+		int affected = jdbcTemplate.update(query, new Object[] { book.getName(), book.getDescription(),
+				book.getCategoryId(), book.getPublishingHouseId(), book.getPdf(), book.getImg() });
+		return (affected > 0);
+	}
+
+	public boolean UpdateBook(Book book) {
+		String query = "Update Book set name = ?, description = ?, categoryId = ?, publishingHouseId = ? where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { book.getName(), book.getDescription(),
+				book.getCategoryId(), book.getPublishingHouseId() });
+		return (affected > 0);
+	}
+
+	public boolean DeleteBook(long id) {
+		String query = "Delete from Book where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { id });
+		return (affected > 0);
+	}
+
+	public int CountBook() {
+		String query = "Select count(*) from Book";
+		int count = jdbcTemplate.queryForObject(query, Integer.class);
+		return count;
+	}
 }

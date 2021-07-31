@@ -25,7 +25,7 @@ public class CategoryDAO {
 
 	public Category GetCategory(int id) {
 		Category category = null;
-		String query = "Select * from Category where ID = ?";
+		String query = "Select * from Category where Id = ?";
 		category = jdbcTemplate.queryForObject(query, new Object[] { id }, new CategoryMapper());
 		return category;
 	}
@@ -39,14 +39,14 @@ public class CategoryDAO {
 
 	public boolean UpdateCategory(Category category) {
 
-		String query = "Update Category set name = ?, description = ? where ID = ?";
+		String query = "Update Category set name = ?, description = ? where Id = ?";
 		int affected = jdbcTemplate.update(query,
 				new Object[] { category.getName(), category.getDescription(), category.getID() });
 		return (affected > 0);
 	}
 
 	public boolean DeleteCategory(int id) {
-		String query = "Delete from Category where ID = ?";
+		String query = "Delete from Category where Id = ?";
 		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
