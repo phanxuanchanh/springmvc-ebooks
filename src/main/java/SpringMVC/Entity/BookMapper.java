@@ -8,8 +8,10 @@ import org.springframework.jdbc.core.RowMapper;
 public class BookMapper implements RowMapper<Book> {
 
 	public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Book book = new Book(rs.getLong("Id"), rs.getString("name"), rs.getString("description"),
+				rs.getInt("categoryId"), rs.getLong("publishingHouseId"), rs.getLong("views"), rs.getLong("upvote"),
+				rs.getLong("downvote"), rs.getString("pdf"), rs.getString("img"));
+		return book;
 	}
 
 }

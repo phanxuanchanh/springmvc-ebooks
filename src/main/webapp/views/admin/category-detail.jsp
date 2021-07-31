@@ -22,7 +22,7 @@
 					<tbody>
 						<tr>
 							<th style="width: 25%;">ID thể loại</th>
-							<td>${ category.ID }</td>
+							<td>${ category.Id }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Tên thể loại</th>

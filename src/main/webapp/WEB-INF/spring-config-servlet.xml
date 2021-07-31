@@ -19,7 +19,7 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
-		<property name="url" value="jdbc:sqlserver://localhost:1433;databaseName=Movie"></property>
+		<property name="url" value="jdbc:sqlserver://localhost:1433;databaseName=DOAN_SPRING"></property>
 		<property name="username" value="sa"></property>
 		<property name="password" value="123456789"></property>
 	</bean>
