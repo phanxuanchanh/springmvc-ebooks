@@ -50,4 +50,10 @@ public class CategoryDAO {
 		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
+	
+	public int CountCategory() {
+		String query = "Select count(*) from Category";
+		int count = jdbcTemplate.queryForObject(query, Integer.class);
+		return count;
+	}
 }

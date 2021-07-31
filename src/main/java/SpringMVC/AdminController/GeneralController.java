@@ -6,17 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import SpringMVC.AdminService.CategoryServiceImpl;
+import SpringMVC.AdminService.GeneralServiceImpl;
 
 @Controller
 public class GeneralController {
 	@Autowired
-	CategoryServiceImpl categoryServiceImpl;
+	private GeneralServiceImpl generalServiceImpl;
 
-	@RequestMapping(value = "quan-tri/overview", method = RequestMethod.GET)
+	@RequestMapping(value = "quan-tri/tong-quan", method = RequestMethod.GET)
 	public ModelAndView Overview() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("admin/index");
+		modelAndView.setViewName("admin/overview");
+		modelAndView.addObject("analyst", generalServiceImpl.GetAnalyst());
 		return modelAndView;
 	}
 }
