@@ -1,14 +1,13 @@
 package SpringMVC.Entity;
 
 public class Category {
-	
-	private int Id;
+	private int ID;
 	private String name;
 	private String description;
-	
+
 	public Category(int id, String name, String description) {
 		super();
-		Id = id;
+		ID = id;
 		this.name = name;
 		this.description = description;
 	}
@@ -18,11 +17,11 @@ public class Category {
 	}
 
 	public int getID() {
-		return Id;
+		return ID;
 	}
 
 	public void setID(int id) {
-		Id = id;
+		ID = id;
 	}
 
 	public String getName() {
@@ -40,5 +39,5 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 }

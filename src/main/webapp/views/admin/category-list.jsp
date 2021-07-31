@@ -48,14 +48,14 @@
 							<tbody>
 								<c:forEach var="item" items="${ categories }">
 									<tr role="row">
-										<td>${ item.Id }</td>
+										<td>${ item.ID }</td>
 										<td>${ item.name }</td>
 										<td><a
-											href="<c:url value="/quan-tri/chinh-sua-the-loai/${ item.Id }"></c:url>">Chỉnh
+											href="<c:url value="/quan-tri/chinh-sua-the-loai/${ item.ID }"></c:url>">Chỉnh
 												sửa</a> | <a
-											href="<c:url value="/quan-tri/chi-tiet-the-loai/${ item.Id }"></c:url>">Xem
+											href="<c:url value="/quan-tri/chi-tiet-the-loai/${ item.ID }"></c:url>">Xem
 												chi tiết</a> | <a
-											href="<c:url value="/quan-tri/xoa-the-loai/${ item.Id }"></c:url>">Xóa</a>
+											href="<c:url value="/quan-tri/xoa-the-loai/${ item.ID }"></c:url>">Xóa</a>
 										</td>
 									</tr>
 								</c:forEach>

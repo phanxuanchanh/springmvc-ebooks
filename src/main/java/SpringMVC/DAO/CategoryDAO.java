@@ -1,5 +1,7 @@
 package SpringMVC.DAO;
 
+import java.awt.Window.Type;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +33,12 @@ public class CategoryDAO {
 	}
 
 	public boolean CreateCategory(Category category) {
-
 		String query = "Insert into Category(name, description) values(?, ?)";
 		int affected = jdbcTemplate.update(query, new Object[] { category.getName(), category.getDescription() });
 		return (affected > 0);
 	}
 
 	public boolean UpdateCategory(Category category) {
-
 		String query = "Update Category set name = ?, description = ? where Id = ?";
 		int affected = jdbcTemplate.update(query,
 				new Object[] { category.getName(), category.getDescription(), category.getID() });
@@ -50,7 +50,7 @@ public class CategoryDAO {
 		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
-	
+
 	public int CountCategory() {
 		String query = "Select count(*) from Category";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);

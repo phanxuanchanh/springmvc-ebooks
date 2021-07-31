@@ -23,15 +23,15 @@ public class CategoryManagementController {
 		modelAndView.addObject("categories", categoryServiceImpl.GetCategories());
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "quan-tri/chi-tiet-the-loai/{id}", method = RequestMethod.GET)
 	public ModelAndView CategoryDetail(@PathVariable int id) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/category-detail");
-		modelAndView.addObject("category",categoryServiceImpl.GetCategory(id));
+		modelAndView.addObject("category", categoryServiceImpl.GetCategory(id));
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "quan-tri/tao-moi-the-loai", method = RequestMethod.GET)
 	public ModelAndView CreateCategory() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -39,21 +39,23 @@ public class CategoryManagementController {
 		modelAndView.addObject("category", new Category());
 		return modelAndView;
 	}
-	
-	@RequestMapping(value = "quan-tri/tao-moi-the-loai", method = RequestMethod.POST)
+
+	@RequestMapping(value = "quan-tri/tao-moi-the-loai", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public ModelAndView CreateCategory(@ModelAttribute("category") Category category) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/create-category");
+		categoryServiceImpl.CreateCategory(category);
+		modelAndView.addObject("category", new Category());
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "quan-tri/cap-nhat-the-loai/{id}", method = RequestMethod.GET)
 	public ModelAndView UpdateCategory(@PathVariable int id) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/update-category");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "quan-tri/xoa-the-loai/{id}", method = RequestMethod.GET)
 	public ModelAndView DeleteCategory(int id) {
 		ModelAndView modelAndView = new ModelAndView();

@@ -18,7 +18,7 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	public Book GetBook(long id) {
-		return bookDAO.GetBook(id)
+		return bookDAO.GetBook(id);
 	}
 
 }
