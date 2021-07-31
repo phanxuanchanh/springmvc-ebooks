@@ -6,7 +6,7 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	<h1 class="h3 mb-0 text-gray-800">Trang quản trị/Tạo mới thể loại</h1>
-	<a href="/admin/category-management/create"
+	<a href="#"
 		class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 		<i class="fas fa-download fa-sm text-white-50"></i> Tạo mới
 	</a>
@@ -17,7 +17,8 @@
 		<h6 class="m-0 font-weight-bold text-primary">Tạo mới thể loại</h6>
 	</div>
 	<div class="card-body">
-		<form:form method="POST" action="tao-moi-the-loai"
+		<c:url var="post_url" value="/quan-tri/tao-moi-the-loai"></c:url>
+		<form:form method="POST" action="${ post_url }"
 			modelAttribute="category">
 			<div class="form-horizontal">
 
@@ -51,7 +52,7 @@
 	</div>
 	<div class="card-footer">
 		<a class="btn btn-primary"
-			href="<c:url value="danh-sach-the-loai"></c:url>">Quay về danh
+			href="<c:url value="/quan-tri/danh-sach-the-loai"></c:url>">Quay về danh
 			sách</a>
 	</div>
 </div>

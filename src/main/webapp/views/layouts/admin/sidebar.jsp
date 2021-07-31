@@ -22,7 +22,7 @@
 	<hr class="sidebar-divider my-0">
 
 	<!-- Nav Item - Dashboard -->
-	<li class="nav-item active"><a class="nav-link" href="<c:url value="tong-quan"></c:url>">
+	<li class="nav-item active"><a class="nav-link" href="<c:url value="/quan-tri/tong-quan"></c:url>">
 			<i class="fas fa-fw fa-tachometer-alt"></i> <span>Trang tổng
 				quan</span>
 	</a></li>
@@ -35,25 +35,25 @@
 
 	<!-- Nav Item - Book -->
 	<li class="nav-item"><a class="nav-link"
-		href="<c:url value="danh-sach-the-loai"></c:url>"> <i
+		href="<c:url value="/quan-tri/danh-sach-the-loai"></c:url>"> <i
 			class="fas fa-fw fa-book"></i> <span>Quản lý thể loại</span>
 	</a></li>
 
 	<!-- Nav Item - Book -->
 	<li class="nav-item"><a class="nav-link"
-		href="<c:url value="danh-sach-nha-xuat-ban"></c:url>"> <i
+		href="<c:url value="/quan-tri/danh-sach-nha-xuat-ban"></c:url>"> <i
 			class="fas fa-fw fa-book"></i> <span>Quản lý nhà xuất bản</span>
 	</a></li>
 
 	<!-- Nav Item - Book -->
 	<li class="nav-item"><a class="nav-link"
-		href="<c:url value="danh-sach-tac-gia"></c:url>"> <i
+		href="<c:url value="/quan-tri/danh-sach-tac-gia"></c:url>"> <i
 			class="fas fa-fw fa-book"></i> <span>Quản lý tác giả</span>
 	</a></li>
 
 	<!-- Nav Item - Book -->
 	<li class="nav-item"><a class="nav-link"
-		href="<c:url value="danh-sach-sach"></c:url>"> <i class="fas fa-fw fa-book"></i>
+		href="<c:url value="/quan-tri/danh-sach-sach"></c:url>"> <i class="fas fa-fw fa-book"></i>
 			<span>Quản lý sách</span>
 	</a></li>
 

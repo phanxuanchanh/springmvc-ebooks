@@ -6,7 +6,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	<h1 class="h3 mb-0 text-gray-800">Trang quản trị/Danh sách thể
 		loại</h1>
-	<a href="<c:url value="tao-moi-the-loai"></c:url>"
+	<a href="<c:url value="/quan-tri/tao-moi-the-loai"></c:url>"
 		class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 		<i class="fas fa-download fa-sm text-white-50"></i> Tạo mới
 	</a>
@@ -15,8 +15,7 @@
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Danh s&#225;ch thể
-			loại</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Danh sách thể loại</h6>
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -51,9 +50,12 @@
 									<tr role="row">
 										<td>${ item.ID }</td>
 										<td>${ item.name }</td>
-										<td><a href="/admin/category-management/edit/1">Chỉnh
-												sửa</a> | <a href="/admin/category-management/details/1">Xem
-												chi tiết</a> | <a href="/admin/category-management/delete/1">X&#243;a</a>
+										<td><a
+											href="<c:url value="/quan-tri/chinh-sua-the-loai/${ item.ID }"></c:url>">Chỉnh
+												sửa</a> | <a
+											href="<c:url value="/quan-tri/chi-tiet-the-loai/${ item.ID }"></c:url>">Xem
+												chi tiết</a> | <a
+											href="<c:url value="/quan-tri/xoa-the-loai/${ item.ID }"></c:url>">Xóa</a>
 										</td>
 									</tr>
 								</c:forEach>
