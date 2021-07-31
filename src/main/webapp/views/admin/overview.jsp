@@ -57,7 +57,7 @@
 						<div
 							class="text-xs font-weight-bold text-warning text-uppercase mb-1">Số
 							lượng nhà xuất bản</div>
-						<div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800">${ analyst.publishingHouseNumber }</div>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -75,7 +75,7 @@
 						<div
 							class="text-xs font-weight-bold text-warning text-uppercase mb-1">Số
 							lượng tác giả</div>
-						<div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800">${ analyst.bookAuthorNumber }</div>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-comments fa-2x text-gray-300"></i>

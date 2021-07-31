@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import SpringMVC.Entity.Category;
 
 @Service
-interface ICategoryService {
+public interface ICategoryService {
 	@Autowired
+	
 	List<Category> GetCategories();
 	Category GetCategory(int id);
 	boolean CreateCategory(Category category);
