@@ -15,6 +15,7 @@ public class CategoryValidator implements Validator {
 		Category category = (Category)target;
 		if(category.getName().trim().length() == 0)
 			errors.rejectValue("name", "", "Tên thể loại không được rỗng");
+		
 		if(category.getName().length() < 3 || category.getName().length() > 50)
 			errors.rejectValue("name", "", "Tên thể loại phải có độ dài lớn hơn 3 và nhỏ hơn 50 ký tự");
 	}

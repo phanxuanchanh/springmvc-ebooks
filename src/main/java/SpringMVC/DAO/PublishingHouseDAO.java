@@ -40,7 +40,7 @@ public class PublishingHouseDAO {
 		String query = "Update PublishingHouse set name = ?, description = ?, email = ?, address = ? where Id = ?";
 		int affected = jdbcTemplate.update(query,
 				new Object[] { publishingHouse.getName(), publishingHouse.getDescription(), publishingHouse.getEmail(),
-						publishingHouse.getAddress(), publishingHouse.getId() });
+						publishingHouse.getAddress(), publishingHouse.getID() });
 		return (affected > 0);
 	}
 
@@ -54,5 +54,17 @@ public class PublishingHouseDAO {
 		String query = "Select count(*) from PublishingHouse";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
+	}
+	
+	public boolean IsExistPublishingHouseById(long id) {
+		String query = "Select count(*) from PublishingHouse where Id = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { id }, Integer.class);
+		return (count > 0);
+	}
+
+	public boolean IsExistPublishingHouseByName(String name) {
+		String query = "Select count(*) from PublishingHouse where name = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { name }, Integer.class);
+		return (count > 0);
 	}
 }

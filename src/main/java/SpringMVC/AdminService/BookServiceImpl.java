@@ -18,7 +18,26 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	public Book GetBook(long id) {
-		return bookDAO.GetBook(id);
+		if (bookDAO.IsExistBookById(id))
+			return bookDAO.GetBook(id);
+		return null;
 	}
 
+	public boolean CreateBook(Book book) {
+		if (bookDAO.IsExistBookByName(book.getName()))
+			return false;
+		return bookDAO.CreateBook(book);
+	}
+
+	public boolean UpdateBook(Book book) {
+		if (bookDAO.IsExistBookById(book.getID()))
+			return bookDAO.UpdateBook(book);
+		return false;
+	}
+
+	public boolean DeleteBook(long id) {
+		if (bookDAO.IsExistBookById(id))
+			return bookDAO.DeleteBook(id);
+		return false;
+	}
 }

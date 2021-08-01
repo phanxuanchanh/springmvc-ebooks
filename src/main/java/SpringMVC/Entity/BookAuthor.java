@@ -1,18 +1,18 @@
 package SpringMVC.Entity;
 
 public class BookAuthor {
-	private long Id;
+	private long ID;
 	private String name;
 	private String description;
 	private String email;
 	private String address;
 
-	public long getId() {
-		return Id;
+	public long getID() {
+		return ID;
 	}
 
-	public void setId(long id) {
-		Id = id;
+	public void setID(long id) {
+		ID = id;
 	}
 
 	public String getName() {
@@ -49,7 +49,7 @@ public class BookAuthor {
 
 	public BookAuthor(long id, String name, String description, String email, String address) {
 		super();
-		Id = id;
+		ID = id;
 		this.name = name;
 		this.description = description;
 		this.email = email;

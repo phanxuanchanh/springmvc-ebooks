@@ -18,18 +18,26 @@ public class PublishingHouseServiceImpl implements IPublishingHouseService {
 	}
 
 	public PublishingHouse GetPublishingHouse(long id) {
-		return publishingHouseDAO.GetPublishingHouse(id);
+		if (publishingHouseDAO.IsExistPublishingHouseById(id))
+			return publishingHouseDAO.GetPublishingHouse(id);
+		return null;
 	}
 
 	public boolean CreatePublishingHouse(PublishingHouse publishingHouse) {
+		if (publishingHouseDAO.IsExistPublishingHouseByName(publishingHouse.getName()))
+			return false;
 		return publishingHouseDAO.CreatePublishingHouse(publishingHouse);
 	}
 
 	public boolean UpdatePublishingHouse(PublishingHouse publishingHouse) {
-		return publishingHouseDAO.UpdatePublishingHouse(publishingHouse);
+		if (publishingHouseDAO.IsExistPublishingHouseById(publishingHouse.getID()))
+			return publishingHouseDAO.UpdatePublishingHouse(publishingHouse);
+		return false;
 	}
 
 	public boolean DeletePublishingHouse(long id) {
-		return publishingHouseDAO.DeletePublishingHouse(id);
+		if (publishingHouseDAO.IsExistPublishingHouseById(id))
+			return publishingHouseDAO.DeletePublishingHouse(id);
+		return false;
 	}
 }

@@ -1,7 +1,7 @@
 package SpringMVC.Entity;
 
 public class Book {
-	private long Id;
+	private long ID;
 	private String name;
 	private String description;
 	private int categoryId;
@@ -12,12 +12,12 @@ public class Book {
 	private String pdf;
 	private String img;
 
-	public long getId() {
-		return Id;
+	public long getID() {
+		return ID;
 	}
 
-	public void setId(long id) {
-		Id = id;
+	public void setID(long id) {
+		ID = id;
 	}
 
 	public String getName() {
@@ -95,7 +95,7 @@ public class Book {
 	public Book(long id, String name, String description, int categoryId, long publishingHouseId, long views, long upvote,
 			long downvote, String pdf, String img) {
 		super();
-		Id = id;
+		ID = id;
 		this.name = name;
 		this.description = description;
 		this.categoryId = categoryId;

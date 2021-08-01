@@ -22,7 +22,7 @@
 					<tbody>
 						<tr>
 							<th style="width: 25%;">ID nhà xuất bản</th>
-							<td>${ publishingHouse.Id }</td>
+							<td>${ publishingHouse.ID }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Tên nhà xuất bản</th>

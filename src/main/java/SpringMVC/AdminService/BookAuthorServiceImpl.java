@@ -18,18 +18,26 @@ public class BookAuthorServiceImpl implements IBookAuthorService {
 	}
 
 	public BookAuthor GetBookAuthor(long id) {
-		return bookAuthorDAO.GetBookAuthor(id);
+		if (bookAuthorDAO.IsExistBookAuthorById(id))
+			return bookAuthorDAO.GetBookAuthor(id);
+		return null;
 	}
 
 	public boolean CreateBookAuthor(BookAuthor bookAuthor) {
+		if (bookAuthorDAO.IsExistBookAuthorByName(bookAuthor.getName()))
+			return false;
 		return bookAuthorDAO.CreateBookAuthor(bookAuthor);
 	}
 
 	public boolean UpdateBookAuthor(BookAuthor bookAuthor) {
-		return bookAuthorDAO.UpdateBookAuthor(bookAuthor);
+		if (bookAuthorDAO.IsExistBookAuthorById(bookAuthor.getID()))
+			return bookAuthorDAO.UpdateBookAuthor(bookAuthor);
+		return false;
 	}
 
 	public boolean DeleteBookAuthor(long id) {
-		return bookAuthorDAO.DeleteBookAuthor(id);
+		if (bookAuthorDAO.IsExistBookAuthorById(id))
+			return bookAuthorDAO.DeleteBookAuthor(id);
+		return false;
 	}
 }

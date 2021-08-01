@@ -16,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Danh s&#225;ch thể loại - Trang quản trị</title>
+<title>Trang quản trị</title>
 
 <!-- Custom fonts for this template-->
 <link href="<c:url value="/assets/admin/vendor/fontawesome-free/css/all.min.css"></c:url>"

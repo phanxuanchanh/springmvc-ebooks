@@ -5,7 +5,7 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	<h1 class="h3 mb-0 text-gray-800">Trang quản trị/Chi tiết tác giả</h1>
-	<a href="<c:url value="/quan-tri/tao-moi-nha-xuat-ban"></c:url>"
+	<a href="<c:url value="/quan-tri/tao-moi-tac-gia"></c:url>"
 		class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 		<i class="fas fa-download fa-sm text-white-50"></i> Tạo mới
 	</a>
@@ -21,23 +21,23 @@
 				<table class="table table-bordered table table-hover">
 					<tbody>
 						<tr>
-							<th style="width: 25%;">ID nhà tác giả</th>
-							<td>${ bookAuthor.Id }</td>
+							<th style="width: 25%;">ID tác giả</th>
+							<td>${ bookAuthor.ID }</td>
 						</tr>
 						<tr>
-							<th style="width: 25%;">Tên nhà tác giả</th>
+							<th style="width: 25%;">Tên tác giả</th>
 							<td>${ bookAuthor.name }</td>
 						</tr>
 						<tr>
-							<th style="width: 25%;">Mô tả nhà tác giả</th>
+							<th style="width: 25%;">Mô tả tác giả</th>
 							<td>${ bookAuthor.description }</td>
 						</tr>
 						<tr>
-							<th style="width: 25%;">Email nhà tác giả</th>
+							<th style="width: 25%;">Email tác giả</th>
 							<td>${ bookAuthor.email }</td>
 						</tr>
 						<tr>
-							<th style="width: 25%;">Địa chỉ nhà tác giả</th>
+							<th style="width: 25%;">Địa chỉ tác giả</th>
 							<td>${ bookAuthor.address }</td>
 						</tr>
 					</tbody>
@@ -47,9 +47,9 @@
 	</div>
 	<div class="card-footer">
 		<a class="btn btn-primary"
-			href="<c:url value="/quan-tri/chinh-sua-nha-xuat-ban"></c:url>">Chỉnh
+			href="<c:url value="/quan-tri/chinh-sua-tac-gia"></c:url>">Chỉnh
 			sửa</a> | <a class="btn btn-success"
-			href="<c:url value="/quan-tri/danh-sach-nha-xuat-ban"></c:url>">Quay
+			href="<c:url value="/quan-tri/danh-sach-tac-gia"></c:url>">Quay
 			về danh sách</a>
 	</div>
 </div>

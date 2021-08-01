@@ -1,7 +1,13 @@
 eclipse.preferences.version=1
+encoding//src/main/java/SpringMVC/AdminController/BookAuthorManagementController.java=UTF-8
+encoding//src/main/java/SpringMVC/AdminController/BookManagementController.java=UTF-8
 encoding//src/main/java/SpringMVC/AdminController/CategoryManagementController.java=UTF-8
+encoding//src/main/java/SpringMVC/AdminController/PublishingHouseManagementController.java=UTF-8
 encoding//src/main/java/SpringMVC/AdminService/CategoryServiceImpl.java=UTF-8
 encoding//src/main/java/SpringMVC/Entity/Category.java=UTF-8
+encoding//src/main/java/SpringMVC/Validator/BookAuthorValidator.java=UTF-8
+encoding//src/main/java/SpringMVC/Validator/BookValidator.java=UTF-8
 encoding//src/main/java/SpringMVC/Validator/CategoryValidator.java=UTF-8
+encoding//src/main/java/SpringMVC/Validator/PublishingHouseValidator.java=UTF-8
 encoding//src/main/webapp/views/admin/overview.jsp=UTF-8
 encoding//src/main/webapp/views/layouts/user.jsp=UTF-8
