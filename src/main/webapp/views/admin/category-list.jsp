@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -12,6 +13,18 @@
 	</a>
 </div>
 
+<div class="row">
+	<div class="col-lg-12 mb-4">
+		<c:if test="${ state != null }">
+			<div class="card bg-secondary text-white shadow">
+				<div class="card-body">
+					${ state }
+					<div><a class="text-white-50 small" href="<c:url value="/quan-tri/danh-sach-the-loai"></c:url>">Tắt thông báo này</a></div>
+				</div>
+			</div>
+		</c:if>
+	</div>
+</div>
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
@@ -50,12 +63,14 @@
 									<tr role="row">
 										<td>${ item.ID }</td>
 										<td>${ item.name }</td>
-										<td><a
-											href="<c:url value="/quan-tri/chinh-sua-the-loai/${ item.ID }"></c:url>">Chỉnh
-												sửa</a> | <a
-											href="<c:url value="/quan-tri/chi-tiet-the-loai/${ item.ID }"></c:url>">Xem
-												chi tiết</a> | <a
-											href="<c:url value="/quan-tri/xoa-the-loai/${ item.ID }"></c:url>">Xóa</a>
+										<td>
+											<c:url var="post_url" value="/quan-tri/xoa-the-loai"></c:url> 
+											<form:form id="deleteCategory${ item.ID }" method="POST" action="${ post_url }">
+												<input type="hidden" name="id" value="${ item.ID }" />
+											</form:form>
+											<a class="btn btn-success" href="<c:url value="/quan-tri/chinh-sua-the-loai/${ item.ID }"></c:url>">Chỉnh sửa</a> | 
+											<a class="btn btn-primary" href="<c:url value="/quan-tri/chi-tiet-the-loai/${ item.ID }"></c:url>">Xem chi tiết</a> | 
+											<button type="submit" class="btn btn-danger" form="deleteCategory${ item.ID }">Xóa</button>
 										</td>
 									</tr>
 								</c:forEach>

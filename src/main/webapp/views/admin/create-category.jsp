@@ -12,6 +12,19 @@
 	</a>
 </div>
 
+<div class="row">
+	<div class="col-lg-12 mb-4">
+		<c:if test="${ state != null }">
+			<div class="card bg-secondary text-white shadow">
+				<div class="card-body">
+					${ state }
+					<div><a class="text-white-50 small" href="<c:url value="/quan-tri/tao-moi-the-loai"></c:url>">Tắt thông báo này</a></div>
+				</div>
+			</div>
+		</c:if>
+	</div>
+</div>
+
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
 		<h6 class="m-0 font-weight-bold text-primary">Tạo mới thể loại</h6>
@@ -27,8 +40,7 @@
 					<div>
 						<form:input path="name"
 							cssClass="form-control text-box single-line" />
-						<span class="field-validation-valid text-danger"
-							data-valmsg-for="name" data-valmsg-replace="true"></span>
+							<form:errors path="name" cssClass="field-validation-valid text-danger"/>
 					</div>
 				</div>
 
@@ -37,8 +49,6 @@
 						loại</label>
 					<div>
 						<form:textarea path="description" cssClass="form-control" />
-						<span class="field-validation-valid text-danger"
-							data-valmsg-for="name" data-valmsg-replace="true"></span>
 					</div>
 				</div>
 

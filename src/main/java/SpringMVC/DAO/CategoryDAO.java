@@ -1,7 +1,5 @@
 package SpringMVC.DAO;
 
-import java.awt.Window.Type;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,5 +53,17 @@ public class CategoryDAO {
 		String query = "Select count(*) from Category";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
+	}
+
+	public boolean IsExistCategoryById(int id) {
+		String query = "Select count(*) from Category where Id = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { id }, Integer.class);
+		return (count > 0);
+	}
+
+	public boolean IsExistCategoryByName(String name) {
+		String query = "Select count(*) from Category where name = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { name }, Integer.class);
+		return (count > 0);
 	}
 }

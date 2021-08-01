@@ -12,25 +12,35 @@ import SpringMVC.Entity.Category;
 public class CategoryServiceImpl implements ICategoryService {
 	@Autowired
 	private CategoryDAO categoryDAO;
-	
+
 	public List<Category> GetCategories() {
 		return categoryDAO.GetCategories();
 	}
 
 	public Category GetCategory(int id) {
-		return categoryDAO.GetCategory(id);
+		if (categoryDAO.IsExistCategoryById(id))
+			return categoryDAO.GetCategory(id);
+		return null;
 	}
 
 	public boolean CreateCategory(Category category) {
+		if(categoryDAO.IsExistCategoryByName(category.getName()))
+			return false;
 		return categoryDAO.CreateCategory(category);
 	}
 
 	public boolean UpdateCategory(Category category) {
-		return categoryDAO.UpdateCategory(category);
+		if(categoryDAO.IsExistCategoryById(category.getID()))
+			return categoryDAO.UpdateCategory(category);
+		return false;
 	}
 
 	public boolean DeleteCategory(int id) {
-		return categoryDAO.DeleteCategory(id);
+		if (categoryDAO.IsExistCategoryById(id)) {
+			//Kiểm tra điều kiện ràng buộc
+			return categoryDAO.DeleteCategory(id);
+		}
+		return false;
 	}
-	
+
 }

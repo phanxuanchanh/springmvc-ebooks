@@ -10,10 +10,14 @@ import SpringMVC.Entity.Category;
 @Service
 public interface ICategoryService {
 	@Autowired
-	
+
 	List<Category> GetCategories();
+
 	Category GetCategory(int id);
+
 	boolean CreateCategory(Category category);
+
 	boolean UpdateCategory(Category category);
+
 	boolean DeleteCategory(int id);
 }
