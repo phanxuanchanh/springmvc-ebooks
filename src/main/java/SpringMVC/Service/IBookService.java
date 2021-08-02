@@ -1,4 +1,4 @@
-package SpringMVC.AdminService;
+package SpringMVC.Service;
 
 import java.util.List;
 

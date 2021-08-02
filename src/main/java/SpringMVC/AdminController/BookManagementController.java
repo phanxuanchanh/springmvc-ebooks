@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import SpringMVC.AdminService.BookServiceImpl;
-import SpringMVC.AdminService.CategoryServiceImpl;
-import SpringMVC.AdminService.PublishingHouseServiceImpl;
 import SpringMVC.DTO.BookInfo;
 import SpringMVC.Entity.Book;
+import SpringMVC.Service.BookServiceImpl;
+import SpringMVC.Service.CategoryServiceImpl;
+import SpringMVC.Service.PublishingHouseServiceImpl;
 import SpringMVC.Validator.BookValidator;
 
 @Controller
@@ -100,6 +102,7 @@ public class BookManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/add-image");
+		modelAndView.addObject("book", book);
 		if(message != null) {
 			if(message.equals("add-success"))
 				modelAndView.addObject("state", "Thêm thành công");
@@ -112,7 +115,9 @@ public class BookManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/them-hinh-anh-cho-sach/{id}", method = RequestMethod.POST)
-	public ModelAndView AddImage() {
+	public ModelAndView AddImage(@RequestParam("file") CommonsMultipartFile file) {
+		
+		String fileName = file.getOriginalFilename();
 		return null;
 	}
 	

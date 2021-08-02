@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import SpringMVC.AdminService.CategoryServiceImpl;
 import SpringMVC.Entity.Category;
+import SpringMVC.Service.CategoryServiceImpl;
 import SpringMVC.Validator.CategoryValidator;
 
 @Controller

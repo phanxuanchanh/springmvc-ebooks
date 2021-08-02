@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import SpringMVC.AdminService.BookAuthorServiceImpl;
 import SpringMVC.Entity.BookAuthor;
+import SpringMVC.Service.BookAuthorServiceImpl;
 import SpringMVC.Validator.BookAuthorValidator;
 
 @Controller

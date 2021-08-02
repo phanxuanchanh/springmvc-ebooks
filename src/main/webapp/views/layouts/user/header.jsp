@@ -6,7 +6,7 @@
 	<nav class="navbar navbar-top-bar navbar-static-top">
 		<div class="container">
 			<ul class="navbar-nav nav">
-				<li><a href="/">Trang chủ</a></li>
+				<li><a href="<c:url value="/"></c:url>">Trang chủ</a></li>
 				<li><a href="#">Liên hệ</a></li>
 				<li><a href="#">Báo cáo lỗi</a></li>
 			</ul>
@@ -211,9 +211,9 @@
 				<!-- /.navbar-header -->
 				<div class="collapse navbar-collapse" id="KYbook-navbar">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="hidden-sm yamm-fw active"><a href="/">Trang
+						<li class="hidden-sm yamm-fw active"><a href="<c:url value="/"></c:url>">Trang
 								chủ</a></li>
-						<li class="hidden-sm"><a href="/all-category">Sách theo
+						<li class="hidden-sm"><a href="<c:url value="/danh-sach-the-loai"></c:url>">Sách theo
 								thể loại</a></li>
 						<li><a href="#">Giới thiệu</a></li>
 					</ul>
@@ -222,7 +222,7 @@
 				<!-- /.collapse -->
 				<a href="#my-cart" class="navbar-btn btn btn-cart"
 					data-toggle="collapse"><img
-					src="/user_assets/images/shopping-cart.png" alt="" /><span
+					src="<c:url value="/assets/user/images/shopping-cart.png"></c:url>" alt="" /><span
 					class="badge-cart-items-count">4</span></a>
 			</div>
 			<!-- /.header-mast -->

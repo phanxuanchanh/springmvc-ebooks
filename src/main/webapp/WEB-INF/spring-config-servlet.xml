@@ -39,4 +39,5 @@
 
 	<mvc:annotation-driven />
 	<mvc:resources location="/assets/" mapping="/assets/**" />
+	<mvc:resources location="/file-upload/" mapping="/file-upload/**" />
 </beans>

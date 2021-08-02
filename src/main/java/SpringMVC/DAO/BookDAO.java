@@ -22,6 +22,27 @@ public class BookDAO {
 		return books;
 	}
 
+	public List<Book> GetLatestBooks() {
+		List<Book> books = new ArrayList<Book>();
+		String query = "Select * from Book order by Id desc";
+		books = jdbcTemplate.query(query, new BookMapper());
+		return books;
+	}
+
+	public List<Book> GetBooksByCategoryId(int id) {
+		List<Book> books = new ArrayList<Book>();
+		String query = "Select * from Book where categoryId = ?";
+		books = jdbcTemplate.query(query, new Object[] { id }, new BookMapper());
+		return books;
+	}
+	
+	public List<Book> GetBooksByViews() {
+		List<Book> books = new ArrayList<Book>();
+		String query = "Select * from Book order by views desc";
+		books = jdbcTemplate.query(query, new BookMapper());
+		return books;
+	}
+
 	public Book GetBook(long id) {
 		Book book = null;
 		String query = "Select * from Book where Id = ?";
@@ -54,7 +75,7 @@ public class BookDAO {
 		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
-	
+
 	public boolean AddPdf(long id, String filePath) {
 		String query = "Update Book set pdf = ? where Id = ?";
 		int affected = jdbcTemplate.update(query, new Object[] { filePath, id });

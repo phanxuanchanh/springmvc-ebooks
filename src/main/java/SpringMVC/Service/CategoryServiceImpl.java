@@ -1,4 +1,4 @@
-package SpringMVC.AdminService;
+package SpringMVC.Service;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	public boolean DeleteCategory(int id) {
 		if (categoryDAO.IsExistCategoryById(id)) {
-			//Kiểm tra điều kiện ràng buộc
+			//Kiểm tra đi�?u kiện ràng buộc
 			return categoryDAO.DeleteCategory(id);
 		}
 		return false;

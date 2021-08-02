@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import SpringMVC.AdminService.PublishingHouseServiceImpl;
 import SpringMVC.Entity.PublishingHouse;
+import SpringMVC.Service.PublishingHouseServiceImpl;
 import SpringMVC.Validator.PublishingHouseValidator;
 
 @Controller
