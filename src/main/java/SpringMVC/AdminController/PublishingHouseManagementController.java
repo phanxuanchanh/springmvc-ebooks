@@ -46,7 +46,7 @@ public class PublishingHouseManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/publishing-house-detail");
-		modelAndView.addObject("publishingHouse", publishingHouseServiceImpl.GetPublishingHouse(id));
+		modelAndView.addObject("publishingHouse", publishingHouse);
 		return modelAndView;
 	}
 	

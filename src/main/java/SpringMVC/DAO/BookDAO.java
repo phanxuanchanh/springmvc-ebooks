@@ -30,9 +30,9 @@ public class BookDAO {
 	}
 
 	public boolean CreateBook(Book book) {
-		String query = "Insert into Book(name, description, categoryId, publishingHouseId, views, upvote, downvote, pdf, img) values(?, ?, ?, ?, 0, 0, 0, ?, ?)";
+		String query = "Insert into Book(name, description, categoryId, publishingHouseId, views, upvote, downvote, pdf, img) values(?, ?, ?, ?, 0, 0, 0, NULL, NULL)";
 		int affected = jdbcTemplate.update(query, new Object[] { book.getName(), book.getDescription(),
-				book.getCategoryId(), book.getPublishingHouseId(), book.getPdf(), book.getImg() });
+				book.getCategoryId(), book.getPublishingHouseId() });
 		return (affected > 0);
 	}
 
@@ -40,6 +40,30 @@ public class BookDAO {
 		String query = "Update Book set name = ?, description = ?, categoryId = ?, publishingHouseId = ? where Id = ?";
 		int affected = jdbcTemplate.update(query, new Object[] { book.getName(), book.getDescription(),
 				book.getCategoryId(), book.getPublishingHouseId(), book.getID() });
+		return (affected > 0);
+	}
+
+	public boolean AddImage(long id, String filePath) {
+		String query = "Update Book set img = ? where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { filePath, id });
+		return (affected > 0);
+	}
+
+	public boolean DeleteImage(long id) {
+		String query = "Update Book set img = NULL where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { id });
+		return (affected > 0);
+	}
+	
+	public boolean AddPdf(long id, String filePath) {
+		String query = "Update Book set pdf = ? where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { filePath, id });
+		return (affected > 0);
+	}
+
+	public boolean DeletePdf(long id) {
+		String query = "Update Book set pdf = NULL where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
 
@@ -54,7 +78,7 @@ public class BookDAO {
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
 	}
-	
+
 	public boolean IsExistBookById(long id) {
 		String query = "Select count(*) from Book where Id = ?";
 		int count = jdbcTemplate.queryForObject(query, new Object[] { id }, Integer.class);

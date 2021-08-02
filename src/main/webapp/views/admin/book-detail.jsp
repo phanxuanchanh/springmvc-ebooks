@@ -22,7 +22,7 @@
 					<tbody>
 						<tr>
 							<th style="width: 25%;">ID sách</th>
-							<td>${ book.Id }</td>
+							<td>${ book.ID }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Tên sách</th>
@@ -31,6 +31,28 @@
 						<tr>
 							<th style="width: 25%;">Mô tả sách</th>
 							<td>${ book.description }</td>
+						</tr>
+						<tr>
+							<th style="width: 25%;">Thể loại</th>
+							<td><c:if test="${ book.category != null }">
+								${ book.category.name }
+								</c:if></td>
+						</tr>
+						<tr>
+							<th style="width: 25%;">Nhà xuất bản</th>
+							<td><c:if test="${ book.publishingHouse != null }">
+								${ book.publishingHouse.name }
+								</c:if></td>
+						</tr>
+						<tr>
+							<th style="width: 25%;">Tác giả</th>
+							<td>
+								<ul>
+									<c:forEach var="item" items="${ book.bookAuthors }">
+										<li>${ item.name }</li>
+									</c:forEach>
+								</ul>
+							</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Lượt xem</th>
@@ -59,9 +81,9 @@
 	</div>
 	<div class="card-footer">
 		<a class="btn btn-primary"
-			href="<c:url value="/quan-tri/chinh-sua-sach"></c:url>">Chỉnh
-			sửa</a> | <a class="btn btn-success"
-			href="<c:url value="/quan-tri/danh-sach-sach"></c:url>">Quay
-			về danh sách</a>
+			href="<c:url value="/quan-tri/chinh-sua-sach"></c:url>">Chỉnh sửa</a>
+		| <a class="btn btn-success"
+			href="<c:url value="/quan-tri/danh-sach-sach"></c:url>">Quay về
+			danh sách</a>
 	</div>
 </div>

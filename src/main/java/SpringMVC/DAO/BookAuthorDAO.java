@@ -14,14 +14,21 @@ import SpringMVC.Entity.BookAuthorMapper;
 public class BookAuthorDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	public List<BookAuthor> GetBookAuthors() {
 		List<BookAuthor> bookAuthors = new ArrayList<BookAuthor>();
 		String query = "Select * from BookAuthor";
 		bookAuthors = jdbcTemplate.query(query, new BookAuthorMapper());
 		return bookAuthors;
 	}
-	
+
+	public List<BookAuthor> GetBookAuthorsByBookId(long bookId) {
+		List<BookAuthor> bookAuthors = new ArrayList<BookAuthor>();
+		String query = "Select BookAuthor.* from BookAuthor, AuthorContribute where BookAuthor.Id = AuthorContribute.bookAuthorId and AuthorContribute.bookId = ?";
+		bookAuthors = jdbcTemplate.query(query, new Object[] {bookId}, new BookAuthorMapper());
+		return bookAuthors;
+	}
+
 	public BookAuthor GetBookAuthor(long id) {
 		BookAuthor bookAuthor = null;
 		String query = "Select * from BookAuthor where Id = ?";
@@ -31,16 +38,15 @@ public class BookAuthorDAO {
 
 	public boolean CreateBookAuthor(BookAuthor bookAuthor) {
 		String query = "Insert into BookAuthor(name, description, email, address) values(?, ?, ?, ?)";
-		int affected = jdbcTemplate.update(query, new Object[] { bookAuthor.getName(),
-				bookAuthor.getDescription(), bookAuthor.getEmail(), bookAuthor.getAddress() });
+		int affected = jdbcTemplate.update(query, new Object[] { bookAuthor.getName(), bookAuthor.getDescription(),
+				bookAuthor.getEmail(), bookAuthor.getAddress() });
 		return (affected > 0);
 	}
 
 	public boolean UpdateBookAuthor(BookAuthor bookAuthor) {
 		String query = "Update BookAuthor set name = ?, description = ?, email = ?, address = ? where Id = ?";
-		int affected = jdbcTemplate.update(query,
-				new Object[] { bookAuthor.getName(), bookAuthor.getDescription(), bookAuthor.getEmail(),
-						bookAuthor.getAddress(), bookAuthor.getID() });
+		int affected = jdbcTemplate.update(query, new Object[] { bookAuthor.getName(), bookAuthor.getDescription(),
+				bookAuthor.getEmail(), bookAuthor.getAddress(), bookAuthor.getID() });
 		return (affected > 0);
 	}
 
@@ -49,13 +55,13 @@ public class BookAuthorDAO {
 		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
-	
+
 	public int CountBookAuthor() {
 		String query = "Select count(*) from BookAuthor";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
 	}
-	
+
 	public boolean IsExistBookAuthorById(long id) {
 		String query = "Select count(*) from BookAuthor where Id = ?";
 		int count = jdbcTemplate.queryForObject(query, new Object[] { id }, Integer.class);

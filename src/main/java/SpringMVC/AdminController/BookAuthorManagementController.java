@@ -46,7 +46,7 @@ public class BookAuthorManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/book-author-detail");
-		modelAndView.addObject("bookAuthor", bookAuthorServiceImpl.GetBookAuthor(id));
+		modelAndView.addObject("bookAuthor", bookAuthor);
 		return modelAndView;
 	}
 	

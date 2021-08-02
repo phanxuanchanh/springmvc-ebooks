@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import SpringMVC.AdminService.BookServiceImpl;
 import SpringMVC.AdminService.CategoryServiceImpl;
 import SpringMVC.AdminService.PublishingHouseServiceImpl;
+import SpringMVC.DTO.BookInfo;
 import SpringMVC.Entity.Book;
 import SpringMVC.Validator.BookValidator;
 
@@ -48,13 +49,13 @@ public class BookManagementController {
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
 		
-		Book book = bookServiceImpl.GetBook(id);
-		if (book == null)
+		BookInfo bookInfo = bookServiceImpl.GetBookInfo(id);
+		if (bookInfo == null)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/book-detail");
-		modelAndView.addObject("book", bookServiceImpl.GetBook(id));
+		modelAndView.addObject("book", bookInfo);
 		return modelAndView;
 	}
 	
@@ -88,6 +89,33 @@ public class BookManagementController {
 		return new ModelAndView("redirect:/quan-tri/tao-moi-sach/add-failed");
 	}
 	
+	@RequestMapping(value = {"quan-tri/them-hinh-anh-cho-sach/{id}", "quan-tri/them-hinh-anh-cho-sach/{id}/{message}"}, method = RequestMethod.GET)
+	public ModelAndView AddImage(@PathVariable long id, @PathVariable(required = false) String message) {
+		if (id <= 0)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		Book book = bookServiceImpl.GetBook(id);
+		if (book == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin/add-image");
+		if(message != null) {
+			if(message.equals("add-success"))
+				modelAndView.addObject("state", "Thêm thành công");
+			else if(message.equals("add-failed"))
+				modelAndView.addObject("state", "Thêm thất bại");
+			else 
+				modelAndView.addObject("state", "Không xác định được nội dung thông báo");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "quan-tri/them-hinh-anh-cho-sach/{id}", method = RequestMethod.POST)
+	public ModelAndView AddImage() {
+		return null;
+	}
+	
 	@RequestMapping(value = {"quan-tri/chinh-sua-sach/{id}", "quan-tri/chinh-sua-sach/{id}/{message}"}, method = RequestMethod.GET)
 	public ModelAndView UpdateBook(@PathVariable long id, @PathVariable(required = false) String message) {
 		if (id <= 0)
@@ -100,6 +128,8 @@ public class BookManagementController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/update-book");
 		modelAndView.addObject("book", book);
+		modelAndView.addObject("categories", categoryServiceImpl.GetCategories());
+		modelAndView.addObject("publishingHouses", publishingHouseServiceImpl.GetPublishingHouses());
 		if(message != null) {
 			if(message.equals("edit-success"))
 				modelAndView.addObject("state", "Chỉnh sửa thành công");
