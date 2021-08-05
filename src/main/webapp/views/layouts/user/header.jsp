@@ -13,7 +13,7 @@
 			<!-- /.navbar-nav -->
 
 			<ul class="navbar-nav nav navbar-right">
-				<li><a href="/admin/general/overview">Quản trị</a></li>
+				<li><a href="<c:url value="/quan-tri/tong-quan"></c:url>">Quản trị</a></li>
 				<li class="active"><a data-toggle="collapse" href="#my-cart">Lượt
 						xem: 4 </a></li>
 			</ul>
@@ -38,7 +38,7 @@
 							class="icon-bar"></span>
 					</button>
 
-					<a class="navbar-brand" href="/"> <svg class="svg-circle"
+					<a class="navbar-brand" href="<c:url value="/"></c:url>"> <svg class="svg-circle"
 							version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							width="255.232px" height="66.132px"
