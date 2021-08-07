@@ -17,22 +17,29 @@ public class UserDAO {
 
 	public List<User> GetUsers() {
 		List<User> users = new ArrayList<User>();
-		String query = "Select * from User";
+		String query = "Select * from [User]";
 		users = jdbcTemplate.query(query, new UserMapper());
 		return users;
 	}
 
-	public User GetUser(int id) {
+	public User GetUser(String username) {
 		User user = null;
-		String query = "Select * from User where Id = ?";
-		user = jdbcTemplate.queryForObject(query, new Object[] { id }, new UserMapper());
+		String query = "Select * from [User] where username = ?";
+		user = jdbcTemplate.queryForObject(query, new Object[] { username }, new UserMapper());
+		return user;
+	}
+	
+	public User GetUserByEmail(String email) {
+		User user = null;
+		String query = "Select * from [User] where email = ?";
+		user = jdbcTemplate.queryForObject(query, new Object[] { email }, new UserMapper());
 		return user;
 	}
 
 	public boolean CreateUser(User user) {
-		String query = "Insert into User(username, password, salt, roleId) values(?, ?, ?, ?)";
+		String query = "Insert into [User](username, email, password, roleId) values(?, ?, ?, ?)";
 		int affected = jdbcTemplate.update(query,
-				new Object[] { user.getUsername(), user.getPassword(), user.getSalt(), user.getRoleId() });
+				new Object[] { user.getUsername(), user.getEmail(), user.getPassword(), user.getRoleId() });
 		return (affected > 0);
 	}
 
@@ -42,15 +49,27 @@ public class UserDAO {
 		return (affected > 0);
 	}*/
 
-	public boolean DeleteUser(int id) {
-		String query = "Delete from User where Id = ?";
-		int affected = jdbcTemplate.update(query, new Object[] { id });
+	public boolean DeleteUser(String username) {
+		String query = "Delete from [User] where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { username });
 		return (affected > 0);
 	}
 
 	public int CountUser() {
-		String query = "Select count(*) from User";
+		String query = "Select count(*) from [User]";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
+	}
+	
+	public boolean IsExistUserByUserName(String username) {
+		String query = "Select count(*) from [User] where username = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { username }, Integer.class);
+		return (count > 0);
+	}
+
+	public boolean IsExistUserByEmail(String email) {
+		String query = "Select count(*) from [User] where email = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { email }, Integer.class);
+		return (count > 0);
 	}
 }

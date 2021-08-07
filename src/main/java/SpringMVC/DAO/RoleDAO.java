@@ -28,6 +28,13 @@ public class RoleDAO {
 		role = jdbcTemplate.queryForObject(query, new Object[] { id }, new RoleMapper());
 		return role;
 	}
+	
+	public Role GetRoleByName(String name) {
+		Role role = null;
+		String query = "Select * from Role where name = ?";
+		role = jdbcTemplate.queryForObject(query, new Object[] { name }, new RoleMapper());
+		return role;
+	}
 
 	public boolean CreateRole(Role role) {
 		String query = "Insert into Role(name) values(?)";
@@ -37,7 +44,7 @@ public class RoleDAO {
 
 	public boolean UpdateRole(Role role) {
 		String query = "Update Role set name = ? where Id = ?";
-		int affected = jdbcTemplate.update(query, new Object[] { role.getName(), role.getId() });
+		int affected = jdbcTemplate.update(query, new Object[] { role.getName(), role.getID() });
 		return (affected > 0);
 	}
 
@@ -51,5 +58,17 @@ public class RoleDAO {
 		String query = "Select count(*) from Role";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
+	}
+
+	public boolean IsExistRoleById(int id) {
+		String query = "Select count(*) from Role where Id = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { id }, Integer.class);
+		return (count > 0);
+	}
+
+	public boolean IsExistRoleByName(String name) {
+		String query = "Select count(*) from Role where name = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { name }, Integer.class);
+		return (count > 0);
 	}
 }

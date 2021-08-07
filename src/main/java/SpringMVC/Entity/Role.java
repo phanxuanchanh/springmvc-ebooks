@@ -1,12 +1,12 @@
 package SpringMVC.Entity;
 
 public class Role {
-	private int Id;
+	private int ID;
 	private String name;
 	
 	public Role(int id, String name) {
 		super();
-		Id = id;
+		ID = id;
 		this.name = name;
 	}
 
@@ -14,12 +14,12 @@ public class Role {
 		super();
 	}
 
-	public int getId() {
-		return Id;
+	public int getID() {
+		return ID;
 	}
 
-	public void setId(int id) {
-		Id = id;
+	public void setID(int id) {
+		ID = id;
 	}
 
 	public String getName() {

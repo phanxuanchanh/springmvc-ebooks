@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 public class UserMapper implements RowMapper<User> {
 
 	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-		User user = new User(rs.getString("username"), rs.getString("password"), rs.getString("salt"),
+		User user = new User(rs.getString("username"), rs.getString("email"), rs.getString("password"),
 				rs.getInt("roleId"));
 		return user;
 	}

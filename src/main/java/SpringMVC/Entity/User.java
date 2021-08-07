@@ -2,8 +2,8 @@ package SpringMVC.Entity;
 
 public class User {
 	private String username;
+	private String email;
 	private String password;
-	private String salt;
 	private int roleId;
 
 	public String getUsername() {
@@ -13,6 +13,14 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getPassword() {
 		return password;
@@ -20,14 +28,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
 	}
 
 	public int getRoleId() {
@@ -42,11 +42,11 @@ public class User {
 		super();
 	}
 
-	public User(String username, String password, String salt, int roleId) {
+	public User(String username, String email, String password, int roleId) {
 		super();
 		this.username = username;
+		this.email = email;
 		this.password = password;
-		this.salt = salt;
 		this.roleId = roleId;
 	}
 }
