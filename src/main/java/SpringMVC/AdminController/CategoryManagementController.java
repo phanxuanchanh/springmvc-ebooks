@@ -1,5 +1,7 @@
 package SpringMVC.AdminController;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +22,19 @@ public class CategoryManagementController {
 	CategoryServiceImpl categoryServiceImpl;
 
 	@RequestMapping(value = { "quan-tri/danh-sach-the-loai", "quan-tri/danh-sach-the-loai/{message}" }, method = RequestMethod.GET)
-	public ModelAndView CategoryList(@PathVariable(required = false) String message) {
+	public ModelAndView CategoryList(HttpSession httpSession, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/category-list");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("categories", categoryServiceImpl.GetCategories());
 		if(message != null) {
 			if(message.equals("delete-success"))
@@ -36,7 +48,15 @@ public class CategoryManagementController {
 	}
 
 	@RequestMapping(value = "quan-tri/chi-tiet-the-loai/{id}", method = RequestMethod.GET)
-	public ModelAndView CategoryDetail(@PathVariable int id) {
+	public ModelAndView CategoryDetail(HttpSession httpSession, @PathVariable int id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-the-loai");
 
@@ -46,14 +66,26 @@ public class CategoryManagementController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/category-detail");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("category", category);
 		return modelAndView;
 	}
 
 	@RequestMapping(value = {"quan-tri/tao-moi-the-loai", "quan-tri/tao-moi-the-loai/{message}"}, method = RequestMethod.GET)
-	public ModelAndView CreateCategory(@PathVariable(required = false) String message) {
+	public ModelAndView CreateCategory(HttpSession httpSession, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/create-category");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("category", new Category());
 		if(message != null) {
 			if(message.equals("add-success"))
@@ -67,10 +99,24 @@ public class CategoryManagementController {
 	}
 
 	@RequestMapping(value = "quan-tri/tao-moi-the-loai", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ModelAndView CreateCategory(@ModelAttribute("category") Category category, BindingResult bindingResult, CategoryValidator categoryValidator) {
+	public ModelAndView CreateCategory(HttpSession httpSession, @ModelAttribute("category") Category category, BindingResult bindingResult, CategoryValidator categoryValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		categoryValidator.validate(category, bindingResult);
-		if (bindingResult.hasErrors())
-			return new ModelAndView("admin/create-category", "category", category);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/create-category");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("category", category);
+			return modelAndView;
+		}
 
 		if(categoryServiceImpl.CreateCategory(category))
 			return new ModelAndView("redirect:/quan-tri/tao-moi-the-loai/add-success");
@@ -79,7 +125,15 @@ public class CategoryManagementController {
 	}
 
 	@RequestMapping(value = {"quan-tri/chinh-sua-the-loai/{id}", "quan-tri/chinh-sua-the-loai/{id}/{message}"}, method = RequestMethod.GET)
-	public ModelAndView UpdateCategory(@PathVariable int id, @PathVariable(required = false) String message) {
+	public ModelAndView UpdateCategory(HttpSession httpSession, @PathVariable int id, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-the-loai");
 
@@ -89,6 +143,8 @@ public class CategoryManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/update-category");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("category", category);
 		if(message != null) {
 			if(message.equals("edit-success"))
@@ -102,10 +158,24 @@ public class CategoryManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/chinh-sua-the-loai/{id}", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ModelAndView UpdateCategory(@ModelAttribute("category") Category category, BindingResult bindingResult, CategoryValidator categoryValidator) {
+	public ModelAndView UpdateCategory(HttpSession httpSession, @ModelAttribute("category") Category category, BindingResult bindingResult, CategoryValidator categoryValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		categoryValidator.validate(category, bindingResult);
-		if (bindingResult.hasErrors())
-			return new ModelAndView("admin/update-category", "category", category);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/update-category");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("category", category);
+			return modelAndView;
+		}
 
 		if(categoryServiceImpl.UpdateCategory(category))
 			return new ModelAndView("redirect:/quan-tri/chinh-sua-the-loai/{id}/edit-success");
@@ -114,7 +184,15 @@ public class CategoryManagementController {
 	}
 
 	@RequestMapping(value = "quan-tri/xoa-the-loai", method = RequestMethod.POST)
-	public ModelAndView DeleteCategory(@RequestParam(value = "id", required = true) int id) {
+	public ModelAndView DeleteCategory(HttpSession httpSession, @RequestParam(value = "id", required = true) int id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if(id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-the-loai/delete-failed");
 		

@@ -1,5 +1,7 @@
 package SpringMVC.AdminController;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +22,19 @@ public class BookAuthorManagementController {
 	private BookAuthorServiceImpl bookAuthorServiceImpl;
 	
 	@RequestMapping(value = {"quan-tri/danh-sach-tac-gia","quan-tri/danh-sach-tac-gia/{message}"}, method = RequestMethod.GET)
-	public ModelAndView BookAuthorList(@PathVariable(required = false) String message) {
+	public ModelAndView BookAuthorList(HttpSession httpSession, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/book-author-list");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("bookAuthors", bookAuthorServiceImpl.GetBookAuthors());
 		if(message != null) {
 			if(message.equals("delete-success"))
@@ -36,7 +48,15 @@ public class BookAuthorManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/chi-tiet-tac-gia/{id}", method = RequestMethod.GET)
-	public ModelAndView BookAuthorDetail(@PathVariable long id) {
+	public ModelAndView BookAuthorDetail(HttpSession httpSession, @PathVariable long id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-tac-gia");
 		
@@ -46,14 +66,26 @@ public class BookAuthorManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/book-author-detail");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("bookAuthor", bookAuthor);
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = {"quan-tri/tao-moi-tac-gia", "quan-tri/tao-moi-tac-gia/{message}"}, method = RequestMethod.GET)
-	public ModelAndView CreateBookAuthor(@PathVariable(required = false) String message) {
+	public ModelAndView CreateBookAuthor(HttpSession httpSession, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/create-book-author");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("bookAuthor", new BookAuthor());
 		if(message != null) {
 			if(message.equals("add-success"))
@@ -67,10 +99,24 @@ public class BookAuthorManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/tao-moi-tac-gia", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ModelAndView CreateBookAuthor(@ModelAttribute("bookAuthor") BookAuthor bookAuthor, BindingResult bindingResult, BookAuthorValidator bookAuthorValidator) {
+	public ModelAndView CreateBookAuthor(HttpSession httpSession, @ModelAttribute("bookAuthor") BookAuthor bookAuthor, BindingResult bindingResult, BookAuthorValidator bookAuthorValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		bookAuthorValidator.validate(bookAuthor, bindingResult);
-		if (bindingResult.hasErrors())
-			return new ModelAndView("admin/create-book-author", "bookAuthor", bookAuthor);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/create-book-author");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("bookAuthor", bookAuthor);
+			return modelAndView;
+		}
 
 		if(bookAuthorServiceImpl.CreateBookAuthor(bookAuthor))
 			return new ModelAndView("redirect:/quan-tri/tao-moi-tac-gia/add-success");
@@ -79,7 +125,15 @@ public class BookAuthorManagementController {
 	}
 	
 	@RequestMapping(value = {"quan-tri/chinh-sua-tac-gia/{id}", "quan-tri/chinh-sua-tac-gia/{id}/{message}"}, method = RequestMethod.GET)
-	public ModelAndView UpdateBookAuthor(@PathVariable long id, @PathVariable(required = false) String message) {
+	public ModelAndView UpdateBookAuthor(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-tac-gia");
 
@@ -89,6 +143,8 @@ public class BookAuthorManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/update-book-author");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("bookAuthor", bookAuthor);
 		if(message != null) {
 			if(message.equals("edit-success"))
@@ -102,10 +158,24 @@ public class BookAuthorManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/chinh-sua-tac-gia/{id}", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ModelAndView UpdateBookAuthor(@ModelAttribute("bookAuthor") BookAuthor bookAuthor, BindingResult bindingResult, BookAuthorValidator bookAuthorValidator) {
+	public ModelAndView UpdateBookAuthor(HttpSession httpSession, @ModelAttribute("bookAuthor") BookAuthor bookAuthor, BindingResult bindingResult, BookAuthorValidator bookAuthorValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		bookAuthorValidator.validate(bookAuthor, bindingResult);
-		if (bindingResult.hasErrors())
-			return new ModelAndView("admin/update-book-author", "bookAuthor", bookAuthor);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/update-book-author");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("bookAuthor", bookAuthor);
+			return modelAndView;
+		}
 
 		if(bookAuthorServiceImpl.UpdateBookAuthor(bookAuthor))
 			return new ModelAndView("redirect:/quan-tri/chinh-sua-tac-gia/{id}/edit-success");
@@ -114,7 +184,15 @@ public class BookAuthorManagementController {
 	}
 
 	@RequestMapping(value = "quan-tri/xoa-tac-gia", method = RequestMethod.POST)
-	public ModelAndView DeleteBookAuthor(@RequestParam(value = "id", required = true) long id) {
+	public ModelAndView DeleteBookAuthor(HttpSession httpSession, @RequestParam(value = "id", required = true) long id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if(id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-tac-gia/delete-failed");
 		

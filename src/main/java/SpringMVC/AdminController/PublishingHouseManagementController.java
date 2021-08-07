@@ -1,5 +1,7 @@
 package SpringMVC.AdminController;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +22,19 @@ public class PublishingHouseManagementController {
 	private PublishingHouseServiceImpl publishingHouseServiceImpl;
 	
 	@RequestMapping(value = {"quan-tri/danh-sach-nha-xuat-ban","quan-tri/danh-sach-nha-xuat-ban/{message}"}, method = RequestMethod.GET)
-	public ModelAndView PublishingHouseList(@PathVariable(required = false) String message) {
+	public ModelAndView PublishingHouseList(HttpSession httpSession, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/publishing-house-list");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("publishingHouses", publishingHouseServiceImpl.GetPublishingHouses());
 		if(message != null) {
 			if(message.equals("delete-success"))
@@ -36,7 +48,15 @@ public class PublishingHouseManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/chi-tiet-nha-xuat-ban/{id}", method = RequestMethod.GET)
-	public ModelAndView PublishingHouseDetail(@PathVariable long id) {
+	public ModelAndView PublishingHouseDetail(HttpSession httpSession, @PathVariable long id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-nha-xuat-ban");
 		
@@ -46,14 +66,26 @@ public class PublishingHouseManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/publishing-house-detail");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("publishingHouse", publishingHouse);
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = {"quan-tri/tao-moi-nha-xuat-ban", "quan-tri/tao-moi-nha-xuat-ban/{message}"}, method = RequestMethod.GET)
-	public ModelAndView CreatePublishingHouse(@PathVariable(required = false) String message) {
+	public ModelAndView CreatePublishingHouse(HttpSession httpSession, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/create-publishing-house");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("publishingHouse", new PublishingHouse());
 		if(message != null) {
 			if(message.equals("add-success"))
@@ -67,10 +99,24 @@ public class PublishingHouseManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/tao-moi-nha-xuat-ban", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ModelAndView CreatePublishingHouse(@ModelAttribute("publishingHouse") PublishingHouse publishingHouse, BindingResult bindingResult, PublishingHouseValidator publishingHouseValidator) {
+	public ModelAndView CreatePublishingHouse(HttpSession httpSession, @ModelAttribute("publishingHouse") PublishingHouse publishingHouse, BindingResult bindingResult, PublishingHouseValidator publishingHouseValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		publishingHouseValidator.validate(publishingHouse, bindingResult);
-		if (bindingResult.hasErrors())
-			return new ModelAndView("admin/create-publishing-house", "publishingHouse", publishingHouse);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/create-publishing-house");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("publishingHouse", publishingHouse);
+			return modelAndView;
+		}
 
 		if(publishingHouseServiceImpl.CreatePublishingHouse(publishingHouse))
 			return new ModelAndView("redirect:/quan-tri/tao-moi-nha-xuat-ban/add-success");
@@ -79,7 +125,15 @@ public class PublishingHouseManagementController {
 	}
 	
 	@RequestMapping(value = {"quan-tri/chinh-sua-nha-xuat-ban/{id}", "quan-tri/chinh-sua-nha-xuat-ban/{id}/{message}"}, method = RequestMethod.GET)
-	public ModelAndView UpdatePublishingHouse(@PathVariable long id, @PathVariable(required = false) String message) {
+	public ModelAndView UpdatePublishingHouse(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if (id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-nha-xuat-ban");
 
@@ -89,6 +143,8 @@ public class PublishingHouseManagementController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/update-publishing-house");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
 		modelAndView.addObject("publishingHouse", publishingHouse);
 		if(message != null) {
 			if(message.equals("edit-success"))
@@ -102,10 +158,24 @@ public class PublishingHouseManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/chinh-sua-nha-xuat-ban/{id}", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public ModelAndView UpdatePublishingHouse(@ModelAttribute("publishingHouse") PublishingHouse publishingHouse, BindingResult bindingResult, PublishingHouseValidator publishingHouseValidator) {
+	public ModelAndView UpdatePublishingHouse(HttpSession httpSession, @ModelAttribute("publishingHouse") PublishingHouse publishingHouse, BindingResult bindingResult, PublishingHouseValidator publishingHouseValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		publishingHouseValidator.validate(publishingHouse, bindingResult);
-		if (bindingResult.hasErrors())
-			return new ModelAndView("admin/update-publishing-house", "publishingHouse", publishingHouse);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/update-publishing-house");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("publishingHouse", publishingHouse);
+			return modelAndView;
+		}
 
 		if(publishingHouseServiceImpl.UpdatePublishingHouse(publishingHouse))
 			return new ModelAndView("redirect:/quan-tri/chinh-sua-nha-xuat-ban/{id}/edit-success");
@@ -114,7 +184,15 @@ public class PublishingHouseManagementController {
 	}
 
 	@RequestMapping(value = "quan-tri/xoa-nha-xuat-ban", method = RequestMethod.POST)
-	public ModelAndView DeletePublishingHouse(@RequestParam(value = "id", required = true) long id) {
+	public ModelAndView DeletePublishingHouse(HttpSession httpSession, @RequestParam(value = "id", required = true) long id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
 		if(id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-nha-xuat-ban/delete-failed");
 		
