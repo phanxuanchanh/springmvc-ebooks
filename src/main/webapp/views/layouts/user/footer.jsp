@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate var="year" value="${now}" pattern="yyyy" />
 
 <footer class="footer">
 	<div class="main-footer">
@@ -8,7 +11,7 @@
 			<!-- ============================================================= FOOTER NAVBAR ============================================================= -->
 			<div class="navbar-footer navbar-static-bottom clearfix">
 				<p class="navbar-text">
-					Copyright &copy; 2021 <span class="navbar-inner-text">EBooks</span>
+					Copyright &copy; ${ year } <span class="navbar-inner-text">EBooks</span>
 				</p>
 				<ul id="example" class="navbar-nav nav ">
 					<li><a href="#">Về chúng tôi</a></li>
