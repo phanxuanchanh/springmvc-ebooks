@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <header class="header">
 	<!-- ============================================================= NAVBAR TOPBAR ============================================================= -->
@@ -13,9 +14,16 @@
 			<!-- /.navbar-nav -->
 
 			<ul class="navbar-nav nav navbar-right">
-				<li><a href="<c:url value="/quan-tri/tong-quan"></c:url>">Quản trị</a></li>
-				<li class="active"><a data-toggle="collapse" href="#my-cart">Lượt
-						xem: 4 </a></li>
+				<li><a href="<c:url value="/quan-tri/tong-quan"></c:url>">Quản
+						trị</a></li>
+				<c:if test="${ isLogged }">
+					<li class="active"><a href="<c:url value="/tai-khoan/dang-xuat"></c:url>">Đăng
+							xuất</a></li>
+				</c:if>
+				<c:if test="${ !isLogged }">
+					<li class="active"><a href="<c:url value="/tai-khoan/dang-nhap"></c:url>">Đăng
+							nhập</a></li>
+				</c:if>
 			</ul>
 			<!-- /.navbar-nav -->
 		</div>
@@ -38,8 +46,9 @@
 							class="icon-bar"></span>
 					</button>
 
-					<a class="navbar-brand" href="<c:url value="/"></c:url>"> <svg class="svg-circle"
-							version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+					<a class="navbar-brand" href="<c:url value="/"></c:url>"> <svg
+							class="svg-circle" version="1.1" id="Layer_1"
+							xmlns="http://www.w3.org/2000/svg"
 							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							width="255.232px" height="66.132px"
 							viewBox="161.754 390.232 255.232 66.132">
@@ -211,9 +220,10 @@
 				<!-- /.navbar-header -->
 				<div class="collapse navbar-collapse" id="KYbook-navbar">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="hidden-sm yamm-fw active"><a href="<c:url value="/"></c:url>">Trang
-								chủ</a></li>
-						<li class="hidden-sm"><a href="<c:url value="/danh-sach-the-loai"></c:url>">Sách theo
+						<li class="hidden-sm yamm-fw active"><a
+							href="<c:url value="/"></c:url>">Trang chủ</a></li>
+						<li class="hidden-sm"><a
+							href="<c:url value="/danh-sach-the-loai"></c:url>">Sách theo
 								thể loại</a></li>
 						<li><a href="#">Giới thiệu</a></li>
 					</ul>
@@ -222,8 +232,8 @@
 				<!-- /.collapse -->
 				<a href="#my-cart" class="navbar-btn btn btn-cart"
 					data-toggle="collapse"><img
-					src="<c:url value="/assets/user/images/shopping-cart.png"></c:url>" alt="" /><span
-					class="badge-cart-items-count">4</span></a>
+					src="<c:url value="/assets/user/images/shopping-cart.png"></c:url>"
+					alt="" /><span class="badge-cart-items-count">4</span></a>
 			</div>
 			<!-- /.header-mast -->
 			<!-- ============================================================= NAVBAR PRIMARY : END ============================================================= -->

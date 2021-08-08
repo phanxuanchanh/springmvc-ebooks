@@ -2,6 +2,8 @@ package SpringMVC.UserController;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,25 +25,37 @@ public class HomeController {
 	private CategoryServiceImpl categoryServiceImpl;
 	
 	@RequestMapping(value = { "/", "/trang-chu" }, method = RequestMethod.GET)
-	public ModelAndView Index() {
+	public ModelAndView Index(HttpSession httpSession) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/index");
+		Object obj = httpSession.getAttribute("loginState");
+		boolean isLogged = false;
+		if(obj != null)
+			isLogged = true;
+		
+		modelAndView.addObject("isLogged", isLogged);
 		modelAndView.addObject("latestBooks", bookServiceImpl.GetLatestBooks());
 		modelAndView.addObject("booksByViews", bookServiceImpl.GetBooksByViews());
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/danh-sach-the-loai", method = RequestMethod.GET)
-	public ModelAndView CategoryList() {
+	public ModelAndView CategoryList(HttpSession httpSession) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/category-list");
+		Object obj = httpSession.getAttribute("loginState");
+		boolean isLogged = false;
+		if(obj != null)
+			isLogged = true;
+		
+		modelAndView.addObject("isLogged", isLogged);
 		modelAndView.addObject("categories", categoryServiceImpl.GetCategories());
 		modelAndView.addObject("bookNumber", bookServiceImpl.CountBook());
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/sach-theo-the-loai/{id}", method = RequestMethod.GET)
-	public ModelAndView BooksByCategory(@PathVariable int id) {
+	public ModelAndView BooksByCategory(HttpSession httpSession, @PathVariable int id) {
 		if(id <= 0)
 			return new ModelAndView("redirect:/");
 		
@@ -59,6 +73,12 @@ public class HomeController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/books-by-category");
+		Object obj = httpSession.getAttribute("loginState");
+		boolean isLogged = false;
+		if(obj != null)
+			isLogged = true;
+		
+		modelAndView.addObject("isLogged", isLogged);
 		modelAndView.addObject("categories", categories);
 		modelAndView.addObject("category", category);
 		modelAndView.addObject("bookNumber", bookServiceImpl.CountBook());
@@ -67,7 +87,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/chi-tiet-sach/{id}", method = RequestMethod.GET)
-	public ModelAndView BookDetail(@PathVariable long id) {
+	public ModelAndView BookDetail(HttpSession httpSession, @PathVariable long id) {
 		if(id <= 0)
 			return new ModelAndView("redirect:/");
 		
@@ -77,6 +97,12 @@ public class HomeController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("user/book-detail");
+		Object obj = httpSession.getAttribute("loginState");
+		boolean isLogged = false;
+		if(obj != null)
+			isLogged = true;
+		
+		modelAndView.addObject("isLogged", isLogged);
 		modelAndView.addObject("book", bookInfo);
 		modelAndView.addObject("bookNumber", bookServiceImpl.CountBook());
 		modelAndView.addObject("booksByCategory", bookServiceImpl.GetBooksByCategoryId(bookInfo.getCategory().getID()));

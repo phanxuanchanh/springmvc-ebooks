@@ -43,7 +43,7 @@
 										cssClass="field-validation-valid text-danger" />
 								</div>
 								<input type="submit" class="btn btn-primary btn-user btn-block"
-									value="Đăng nhập">
+									value="Đăng ký">
 							</form:form>
 							<hr>
 							<div class="text-center">
