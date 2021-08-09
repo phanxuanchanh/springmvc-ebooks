@@ -52,7 +52,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label" for="description">Chọn thể loại</label>
+					<label class="control-label" for="categoryId">Chọn thể loại</label>
 					<div>
 						<form:select path="categoryId" cssClass="form-control">
 							<form:options items="${ categories }" itemValue="ID" itemLabel="name"></form:options>
@@ -61,7 +61,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label" for="description">Chọn nhà xuất bản</label>
+					<label class="control-label" for="publishingHouseId">Chọn nhà xuất bản</label>
 					<div>
 						<form:select path="publishingHouseId" cssClass="form-control">
 							<form:options items="${ publishingHouses }" itemValue="ID" itemLabel="name"></form:options>							

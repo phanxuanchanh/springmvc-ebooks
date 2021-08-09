@@ -16,10 +16,6 @@ public class BookAuthorServiceImpl implements IBookAuthorService {
 	public List<BookAuthor> GetBookAuthors() {
 		return bookAuthorDAO.GetBookAuthors();
 	}
-	
-	public List<BookAuthor> GetBookAuthorsByBookId(long bookId) {
-		return bookAuthorDAO.GetBookAuthorsByBookId(bookId);
-	}
 
 	public BookAuthor GetBookAuthor(long id) {
 		if (bookAuthorDAO.IsExistBookAuthorById(id))

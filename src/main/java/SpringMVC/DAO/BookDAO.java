@@ -22,9 +22,9 @@ public class BookDAO {
 		return books;
 	}
 
-	public List<Book> GetLatestBooks() {
+	public List<Book> GetLatestBooks(int count) {
 		List<Book> books = new ArrayList<Book>();
-		String query = "Select * from Book order by Id desc";
+		String query = "Select top " + count + " * from Book order by Id desc";
 		books = jdbcTemplate.query(query, new BookMapper());
 		return books;
 	}
@@ -36,9 +36,9 @@ public class BookDAO {
 		return books;
 	}
 	
-	public List<Book> GetBooksByViews() {
+	public List<Book> GetBooksByViews(int count) {
 		List<Book> books = new ArrayList<Book>();
-		String query = "Select * from Book order by views desc";
+		String query = "Select top " + count + " * from Book order by views desc";
 		books = jdbcTemplate.query(query, new BookMapper());
 		return books;
 	}

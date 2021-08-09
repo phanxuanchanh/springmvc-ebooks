@@ -9,7 +9,7 @@
 		<!-- ========================================== SECTION – HERO : END========================================= -->
 		<div id="hero">
 			<div id="owl-main" class="owl-carousel owl-theme">
-				<c:forEach var="item" items="${ latestBooks }" begin="0" end="">
+				<c:forEach var="item" items="${ latestBooks }" begin="0" end="2">
 					<div class="item">
 						<div class="container">
 							<div class="content caption">

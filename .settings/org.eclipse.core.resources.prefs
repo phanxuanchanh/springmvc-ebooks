@@ -6,6 +6,7 @@ encoding//src/main/java/SpringMVC/AdminController/CategoryManagementController.j
 encoding//src/main/java/SpringMVC/AdminController/PublishingHouseManagementController.java=UTF-8
 encoding//src/main/java/SpringMVC/Entity/Category.java=UTF-8
 encoding//src/main/java/SpringMVC/Service/CategoryServiceImpl.java=UTF-8
+encoding//src/main/java/SpringMVC/Validator/AuthorContributeValidator.java=UTF-8
 encoding//src/main/java/SpringMVC/Validator/BookAuthorValidator.java=UTF-8
 encoding//src/main/java/SpringMVC/Validator/BookValidator.java=UTF-8
 encoding//src/main/java/SpringMVC/Validator/CategoryValidator.java=UTF-8

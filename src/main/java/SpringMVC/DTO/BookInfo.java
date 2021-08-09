@@ -2,7 +2,6 @@ package SpringMVC.DTO;
 
 import java.util.List;
 
-import SpringMVC.Entity.BookAuthor;
 import SpringMVC.Entity.Category;
 import SpringMVC.Entity.PublishingHouse;
 
@@ -12,7 +11,7 @@ public class BookInfo {
 	private String description;
 	private Category category;
 	private PublishingHouse publishingHouse;
-	private List<BookAuthor> bookAuthors;
+	private List<BookAuthorInfo> bookAuthorInfos;
 	private long views;
 	private long upvote;
 	private long downvote;
@@ -99,23 +98,23 @@ public class BookInfo {
 		this.img = img;
 	}
 
-	public List<BookAuthor> getBookAuthors() {
-		return bookAuthors;
+	public List<BookAuthorInfo> getBookAuthorInfos() {
+		return bookAuthorInfos;
 	}
 
-	public void setBookAuthors(List<BookAuthor> bookAuthors) {
-		this.bookAuthors = bookAuthors;
+	public void setBookAuthorInfos(List<BookAuthorInfo> bookAuthorInfos) {
+		this.bookAuthorInfos = bookAuthorInfos;
 	}
 
 	public BookInfo(long iD, String name, String description, Category category, PublishingHouse publishingHouse,
-			List<BookAuthor> bookAuthors, long views, long upvote, long downvote, String pdf, String img) {
+			List<BookAuthorInfo> bookAuthorInfos, long views, long upvote, long downvote, String pdf, String img) {
 		super();
 		ID = iD;
 		this.name = name;
 		this.description = description;
 		this.category = category;
 		this.publishingHouse = publishingHouse;
-		this.bookAuthors = bookAuthors;
+		this.bookAuthorInfos = bookAuthorInfos;
 		this.views = views;
 		this.upvote = upvote;
 		this.downvote = downvote;

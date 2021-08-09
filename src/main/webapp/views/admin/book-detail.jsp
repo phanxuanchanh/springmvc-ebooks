@@ -22,57 +22,57 @@
 					<tbody>
 						<tr>
 							<th style="width: 25%;">ID sách</th>
-							<td>${ book.ID }</td>
+							<td>${ bookInfo.ID }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Tên sách</th>
-							<td>${ book.name }</td>
+							<td>${ bookInfo.name }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Mô tả sách</th>
-							<td>${ book.description }</td>
+							<td>${ bookInfo.description }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Thể loại</th>
-							<td><c:if test="${ book.category != null }">
-								${ book.category.name }
+							<td><c:if test="${ bookInfo.category != null }">
+								${ bookInfo.category.name }
 								</c:if></td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Nhà xuất bản</th>
-							<td><c:if test="${ book.publishingHouse != null }">
-								${ book.publishingHouse.name }
+							<td><c:if test="${ bookInfo.publishingHouse != null }">
+								${ bookInfo.publishingHouse.name }
 								</c:if></td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Tác giả</th>
 							<td>
 								<ul>
-									<c:forEach var="item" items="${ book.bookAuthors }">
-										<li>${ item.name }</li>
+									<c:forEach var="item" items="${ bookInfo.bookAuthorInfos }">
+										<li>${ item.name } -- Vai trò: ${ item.roleName }</li>
 									</c:forEach>
 								</ul>
 							</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Lượt xem</th>
-							<td>${ book.views }</td>
+							<td>${ bookInfo.views }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Lượt thích</th>
-							<td>${ book.upvote }</td>
+							<td>${ bookInfo.upvote }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Lượt không thích</th>
-							<td>${ book.downvote }</td>
+							<td>${ bookInfo.downvote }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">PDF</th>
-							<td>${ book.pdf }</td>
+							<td>${ bookInfo.pdf }</td>
 						</tr>
 						<tr>
 							<th style="width: 25%;">Hình ảnh</th>
-							<td>${ book.img }</td>
+							<td>${ bookInfo.img }</td>
 						</tr>
 					</tbody>
 				</table>

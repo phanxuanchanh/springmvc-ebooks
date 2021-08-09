@@ -6,13 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import SpringMVC.DAO.AuthorContributeDAO;
 import SpringMVC.DAO.BookAuthorDAO;
 import SpringMVC.DAO.BookDAO;
 import SpringMVC.DAO.CategoryDAO;
 import SpringMVC.DAO.PublishingHouseDAO;
+import SpringMVC.DTO.BookAuthorInfo;
 import SpringMVC.DTO.BookInfo;
+import SpringMVC.Entity.AuthorContribute;
 import SpringMVC.Entity.Book;
-import SpringMVC.Entity.BookAuthor;
 import SpringMVC.Entity.Category;
 import SpringMVC.Entity.PublishingHouse;
 
@@ -29,6 +31,9 @@ public class BookServiceImpl implements IBookService {
 
 	@Autowired
 	private BookAuthorDAO bookAuthorDAO;
+	
+	@Autowired 
+	AuthorContributeDAO authorContributeDAO;
 
 	public List<Book> GetBooks() {
 		List<Book> books = bookDAO.GetBooks();
@@ -42,8 +47,8 @@ public class BookServiceImpl implements IBookService {
 		return books;
 	}
 
-	public List<BookInfo> GetLatestBooks() {
-		List<Book> books = bookDAO.GetLatestBooks();
+	public List<BookInfo> GetLatestBooks(int count) {
+		List<Book> books = bookDAO.GetLatestBooks(count);
 		List<BookInfo> bookInfos = new ArrayList<BookInfo>();
 		for (Book book : books) {
 			if(book.getImg() == null)
@@ -58,8 +63,8 @@ public class BookServiceImpl implements IBookService {
 		return bookInfos;
 	}
 	
-	public List<BookInfo> GetBooksByViews() {
-		List<Book> books = bookDAO.GetBooksByViews();
+	public List<BookInfo> GetBooksByViews(int count) {
+		List<Book> books = bookDAO.GetBooksByViews(count);
 		List<BookInfo> bookInfos = new ArrayList<BookInfo>();
 		for (Book book : books) {
 			if(book.getImg() == null)
@@ -118,10 +123,11 @@ public class BookServiceImpl implements IBookService {
 			
 			Category category = categoryDAO.GetCategory(book.getCategoryId());
 			PublishingHouse publishingHouse = publishingHouseDAO.GetPublishingHouse(book.getPublishingHouseId());
-			List<BookAuthor> bookAuthors = bookAuthorDAO.GetBookAuthorsByBookId(book.getID());
+			List<BookAuthorInfo> bookAuthorInfos = bookAuthorDAO.GetBookAuthorsByBookId(book.getID());
+			
 
 			return new BookInfo(book.getID(), book.getName(), book.getDescription(), category, publishingHouse,
-					bookAuthors, book.getViews(), book.getUpvote(), book.getDownvote(), book.getPdf(), book.getImg());
+					bookAuthorInfos, book.getViews(), book.getUpvote(), book.getDownvote(), book.getPdf(), book.getImg());
 		}
 		return null;
 	}
@@ -135,6 +141,26 @@ public class BookServiceImpl implements IBookService {
 	public boolean UpdateBook(Book book) {
 		if (bookDAO.IsExistBookById(book.getID()))
 			return bookDAO.UpdateBook(book);
+		return false;
+	}
+	
+	public boolean AddBookAuthor(AuthorContribute authorContribute) {
+		if(!bookDAO.IsExistBookById(authorContribute.getBookId()))
+			return false;
+		
+		if(!bookAuthorDAO.IsExistBookAuthorById(authorContribute.getBookAuthorId()))
+			return false;
+		
+		if(authorContributeDAO.IsExistAuthorContributeById(authorContribute.getBookAuthorId(), authorContribute.getBookId()))
+			return false;
+		
+		return authorContributeDAO.CreateAuthorContribute(authorContribute);
+	}
+	
+	public boolean DeleteAllBookAuthor(long bookId) {
+		if(bookDAO.IsExistBookById(bookId)) {
+			return authorContributeDAO.DeleteAuthorContribute(bookId);
+		}
 		return false;
 	}
 

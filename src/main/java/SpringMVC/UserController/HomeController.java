@@ -34,8 +34,8 @@ public class HomeController {
 			isLogged = true;
 		
 		modelAndView.addObject("isLogged", isLogged);
-		modelAndView.addObject("latestBooks", bookServiceImpl.GetLatestBooks());
-		modelAndView.addObject("booksByViews", bookServiceImpl.GetBooksByViews());
+		modelAndView.addObject("latestBooks", bookServiceImpl.GetLatestBooks(10));
+		modelAndView.addObject("booksByViews", bookServiceImpl.GetBooksByViews(10));
 		return modelAndView;
 	}
 	
@@ -103,7 +103,7 @@ public class HomeController {
 			isLogged = true;
 		
 		modelAndView.addObject("isLogged", isLogged);
-		modelAndView.addObject("book", bookInfo);
+		modelAndView.addObject("bookInfo", bookInfo);
 		modelAndView.addObject("bookNumber", bookServiceImpl.CountBook());
 		modelAndView.addObject("booksByCategory", bookServiceImpl.GetBooksByCategoryId(bookInfo.getCategory().getID()));
 		return modelAndView;

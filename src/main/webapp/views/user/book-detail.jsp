@@ -12,8 +12,8 @@
 					<div class="book-cover book detail-book-cover">
 
 						<img
-							src="<c:url value="/file-upload/images/${ book.img }"></c:url>"
-							class="img-responsive" alt="${ book.name }">
+							src="<c:url value="/file-upload/images/${ bookInfo.img }"></c:url>"
+							class="img-responsive" alt="${ bookInfo.name }">
 						<div class="fade"></div>
 					</div>
 					<!-- /.book-cover -->
@@ -22,10 +22,10 @@
 
 				<div class="col-sm-8">
 					<div class="book-detail-header">
-						<h2 class="book-title">${ book.name }</h2>
-						<c:forEach var="item" items="${ book.bookAuthors }">
+						<h2 class="book-title">${ bookInfo.name }</h2>
+						<c:forEach var="item" items="${ bookInfo.bookAuthorInfos }">
 							<p class="book-author">
-								Tác giả: <span class="book-author-name">${ item.name }</span>
+								${ item.roleName }: <span class="book-author-name">${ item.name }</span>
 							</p>
 						</c:forEach>
 						<div class="star-rating">
@@ -52,7 +52,7 @@
 								<div class="row product-actions">
 
 									<a
-										href="<c:url value="/file-upload/pdfs/${ book.pdf }"></c:url>"
+										href="<c:url value="/file-upload/pdfs/${ bookInfo.pdf }"></c:url>"
 										class="col-sm-6 btn btn-primary btn-addToCart"><i
 										class="icon-plus fa fa-plus-circle"></i>Tải xuống</a>
 									<button title="Thích"
@@ -76,7 +76,7 @@
 
 						<div class="product-description">
 							<h3>Mô tả</h3>
-							<p class="text-justify">${ book.description }</p>
+							<p class="text-justify">${ bookInfo.description }</p>
 						</div>
 						<!-- /.product-description -->
 

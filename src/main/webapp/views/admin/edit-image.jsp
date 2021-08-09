@@ -37,7 +37,8 @@
 	</div>
 	<div class="card-body">
 		<c:url var="post_url" value="/quan-tri/them-hinh-anh-cho-sach/{id}"></c:url>
-		<form:form method="POST" action="${ post_url }" enctype = "multipart/form-data">
+		<form:form method="POST" action="${ post_url }"
+			enctype="multipart/form-data">
 			<div class="form-horizontal">
 
 				<input type="hidden" name="ID" value="${ book.ID }" />
@@ -71,9 +72,12 @@
 						</tr>
 						<tr>
 							<th style="width: 25%;">Xóa hình ảnh</th>
-							<td>
-								<button class="btn btn-danger">Xóa</button>
-							</td>
+							<td><c:url var="post_url" value="/quan-tri/xoa-hinh-anh-cua-sach"></c:url>
+								<form:form id="deleteBookImage" method="POST"
+									action="${ post_url }">
+									<input type="hidden" name="id" value="${ item.ID }" />
+									<button type="submit" class="btn btn-danger">Xóa</button>
+								</form:form></td>
 						</tr>
 					</tbody>
 				</table>

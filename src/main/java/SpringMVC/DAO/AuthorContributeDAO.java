@@ -15,10 +15,17 @@ public class AuthorContributeDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public List<AuthorContribute> GetAuthorContributes() {
+	public List<AuthorContribute> GetAuthorContributesByBookAuthorId(long bookAuthorId) {
 		List<AuthorContribute> authorContributes = new ArrayList<AuthorContribute>();
-		String query = "Select * from AuthorContribute";
-		authorContributes = jdbcTemplate.query(query, new AuthorContributeMapper());
+		String query = "Select * from AuthorContribute where bookAuthorId = ?";
+		authorContributes = jdbcTemplate.query(query, new Object[] { bookAuthorId }, new AuthorContributeMapper());
+		return authorContributes;
+	}
+
+	public List<AuthorContribute> GetAuthorContributesByBookId(long bookId) {
+		List<AuthorContribute> authorContributes = new ArrayList<AuthorContribute>();
+		String query = "Select * from AuthorContribute where bookId = ?";
+		authorContributes = jdbcTemplate.query(query, new Object[] { bookId }, new AuthorContributeMapper());
 		return authorContributes;
 	}
 
@@ -49,10 +56,22 @@ public class AuthorContributeDAO {
 		int affected = jdbcTemplate.update(query, new Object[] { bookAuthorId, bookId });
 		return (affected > 0);
 	}
+	
+	public boolean DeleteAuthorContribute(long bookId) {
+		String query = "Delete from AuthorContribute where bookId = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { bookId });
+		return (affected > 0);
+	}
 
 	public int CountAuthorContribute() {
 		String query = "Select count(*) from AuthorContribute";
 		int count = jdbcTemplate.queryForObject(query, Integer.class);
 		return count;
+	}
+
+	public boolean IsExistAuthorContributeById(long bookAuthorId, long bookId) {
+		String query = "Select count(*) from AuthorContribute where bookAuthorId = ? and bookId = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { bookAuthorId, bookId }, Integer.class);
+		return (count > 0);
 	}
 }

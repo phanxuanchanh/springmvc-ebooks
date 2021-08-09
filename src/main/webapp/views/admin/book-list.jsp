@@ -66,7 +66,10 @@
 											<form:form id="deleteBook${ item.ID }" method="POST" action="${ post_url }">
 												<input type="hidden" name="id" value="${ item.ID }" />
 											</form:form>
-											<a class="btn btn-success" href="<c:url value="/quan-tri/chinh-sua-sach/${ item.ID }"></c:url>">Chỉnh sửa</a> | 
+											<a class="btn btn-success" href="<c:url value="/quan-tri/chinh-sua-sach/${ item.ID }"></c:url>">Chỉnh sửa</a> |
+											<a class="btn btn-success" href="<c:url value="/quan-tri/hinh-anh-cua-sach/${ item.ID }"></c:url>">Hình ảnh</a> |  
+											<a class="btn btn-success" href="<c:url value="/quan-tri/pdf-cua-sach/${ item.ID }"></c:url>">PDF</a> |
+											<a class="btn btn-success" href="<c:url value="/quan-tri/tac-gia-cua-sach/${ item.ID }"></c:url>">Tác giả</a> |
 											<a class="btn btn-primary" href="<c:url value="/quan-tri/chi-tiet-sach/${ item.ID }"></c:url>">Xem chi tiết</a> | 
 											<button type="submit" class="btn btn-danger" form="deleteBook${ item.ID }">Xóa</button>
 										</td>

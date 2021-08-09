@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import SpringMVC.DTO.BookInfo;
+import SpringMVC.Entity.AuthorContribute;
 import SpringMVC.Entity.Book;
+import SpringMVC.Service.BookAuthorServiceImpl;
 import SpringMVC.Service.BookServiceImpl;
 import SpringMVC.Service.CategoryServiceImpl;
 import SpringMVC.Service.PublishingHouseServiceImpl;
+import SpringMVC.Validator.AuthorContributeValidator;
 import SpringMVC.Validator.BookValidator;
 
 @Controller
@@ -31,6 +33,9 @@ public class BookManagementController {
 	
 	@Autowired
 	private PublishingHouseServiceImpl publishingHouseServiceImpl;
+	
+	@Autowired
+	private BookAuthorServiceImpl bookAuthorServiceImpl;
 	
 	@RequestMapping(value = {"quan-tri/danh-sach-sach","quan-tri/danh-sach-sach/{message}"}, method = RequestMethod.GET)
 	public ModelAndView BookList(HttpSession httpSession, @PathVariable(required = false) String message) {
@@ -79,7 +84,7 @@ public class BookManagementController {
 		modelAndView.setViewName("admin/book-detail");
 		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
 		modelAndView.addObject("username", username);
-		modelAndView.addObject("book", bookInfo);
+		modelAndView.addObject("bookInfo", bookInfo);
 		return modelAndView;
 	}
 	
@@ -137,8 +142,94 @@ public class BookManagementController {
 		return new ModelAndView("redirect:/quan-tri/tao-moi-sach/add-failed");
 	}
 	
-	@RequestMapping(value = {"quan-tri/them-hinh-anh-cho-sach/{id}", "quan-tri/them-hinh-anh-cho-sach/{id}/{message}"}, method = RequestMethod.GET)
-	public ModelAndView AddImage(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {
+	@RequestMapping(value = {"quan-tri/tac-gia-cua-sach/{id}","quan-tri/tac-gia-cua-sach/{id}/{message}"}, method = RequestMethod.GET)
+	public ModelAndView EditBookAuthor(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		if (id <= 0)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		BookInfo bookInfo = bookServiceImpl.GetBookInfo(id);
+		if (bookInfo == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin/edit-book-author");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
+		modelAndView.addObject("bookInfo", bookInfo);
+		modelAndView.addObject("authorContribute", new AuthorContribute());
+		modelAndView.addObject("bookAuthors", bookAuthorServiceImpl.GetBookAuthors());
+		if(message != null) {
+			if(message.equals("add-success"))
+				modelAndView.addObject("state", "Thêm thành công");
+			else if(message.equals("add-failed"))
+				modelAndView.addObject("state", "Thêm thất bại");
+			else if(message.equals("delete-success"))
+				modelAndView.addObject("state", "Xóa thành công");
+			else if(message.equals("delete-failed"))
+				modelAndView.addObject("state", "Xóa thất bại");
+			else 
+				modelAndView.addObject("state", "Không xác định được nội dung thông báo");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "quan-tri/them-tac-gia-cua-sach/{id}", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public ModelAndView AddBookAuthor(HttpSession httpSession, @ModelAttribute("authorContribute") AuthorContribute authorContribute, BindingResult bindingResult,AuthorContributeValidator authorContributeValidator) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		authorContributeValidator.validate(authorContribute, bindingResult);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/edit-book-author");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("bookInfo", bookServiceImpl.GetBookInfo(authorContribute.getBookId()));
+			modelAndView.addObject("authorContribute", authorContribute);
+			modelAndView.addObject("bookAuthors", bookAuthorServiceImpl.GetBookAuthors());
+			return modelAndView;
+		}
+
+		if(bookServiceImpl.AddBookAuthor(authorContribute))
+			return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/{id}/add-success");
+		
+		return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/{id}/add-failed");
+	}	
+	
+	@RequestMapping(value = "quan-tri/xoa-tat-ca-tac-gia-cua-sach", method = RequestMethod.POST)
+	public ModelAndView DeleteAllBookAuthor(HttpSession httpSession, @RequestParam(value = "id", required = true) long id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		if(id <= 0)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		if(bookServiceImpl.DeleteAllBookAuthor(id))
+			return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/" + id + "/delete-success");
+		
+		return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/" + id + "/delete-failed");
+	}
+		
+	@RequestMapping(value = {"quan-tri/hinh-anh-cua-sach/{id}", "quan-tri/hinh-anh-cua-sach/{id}/{message}"}, method = RequestMethod.GET)
+	public ModelAndView EditImage(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {
 		Object obj = httpSession.getAttribute("loginState");
 		if(obj == null)
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
@@ -155,7 +246,7 @@ public class BookManagementController {
 			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("admin/add-image");
+		modelAndView.setViewName("admin/edit-image");
 		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
 		modelAndView.addObject("username", username);
 		modelAndView.addObject("book", book);
@@ -182,6 +273,20 @@ public class BookManagementController {
 		
 		String fileName = file.getOriginalFilename();
 		return null;
+	}
+	
+	@RequestMapping(value = "quan-tri/xoa-hinh-anh-cua-sach/{id}", method = RequestMethod.POST)
+	public ModelAndView DeleteImage(HttpSession httpSession, @RequestParam(value = "id", required = true) long id) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		
+		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/{id}");
 	}
 	
 	@RequestMapping(value = {"quan-tri/chinh-sua-sach/{id}", "quan-tri/chinh-sua-sach/{id}/{message}"}, method = RequestMethod.GET)
@@ -256,7 +361,7 @@ public class BookManagementController {
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
 		if(id <= 0)
-			return new ModelAndView("redirect:/quan-tri/danh-sach-sach/delete-failed");
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
 		
 		if(bookServiceImpl.DeleteBook(id))
 			return new ModelAndView("redirect:/quan-tri/danh-sach-sach/delete-success");

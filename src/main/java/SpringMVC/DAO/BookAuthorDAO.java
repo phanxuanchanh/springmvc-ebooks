@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import SpringMVC.DTO.BookAuthorInfo;
+import SpringMVC.DTO.BookAuthorInfoMapper;
 import SpringMVC.Entity.BookAuthor;
 import SpringMVC.Entity.BookAuthorMapper;
 
@@ -22,11 +24,11 @@ public class BookAuthorDAO {
 		return bookAuthors;
 	}
 
-	public List<BookAuthor> GetBookAuthorsByBookId(long bookId) {
-		List<BookAuthor> bookAuthors = new ArrayList<BookAuthor>();
-		String query = "Select BookAuthor.* from BookAuthor, AuthorContribute where BookAuthor.Id = AuthorContribute.bookAuthorId and AuthorContribute.bookId = ?";
-		bookAuthors = jdbcTemplate.query(query, new Object[] {bookId}, new BookAuthorMapper());
-		return bookAuthors;
+	public List<BookAuthorInfo> GetBookAuthorsByBookId(long bookId) {
+		List<BookAuthorInfo> bookAuthorInfos = new ArrayList<BookAuthorInfo>();
+		String query = "Select BookAuthor.*, AuthorContribute.role as roleName from BookAuthor, AuthorContribute where BookAuthor.Id = AuthorContribute.bookAuthorId and AuthorContribute.bookId = ?";
+		bookAuthorInfos = jdbcTemplate.query(query, new Object[] {bookId}, new BookAuthorInfoMapper());
+		return bookAuthorInfos;
 	}
 
 	public BookAuthor GetBookAuthor(long id) {
