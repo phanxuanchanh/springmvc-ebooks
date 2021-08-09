@@ -194,7 +194,7 @@ public class PublishingHouseManagementController {
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
 		if(id <= 0)
-			return new ModelAndView("redirect:/quan-tri/danh-sach-nha-xuat-ban/delete-failed");
+			return new ModelAndView("redirect:/quan-tri/danh-sach-nha-xuat-ban");
 		
 		if(publishingHouseServiceImpl.DeletePublishingHouse(id))
 			return new ModelAndView("redirect:/quan-tri/danh-sach-nha-xuat-ban/delete-success");

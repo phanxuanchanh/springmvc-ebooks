@@ -194,7 +194,7 @@ public class BookAuthorManagementController {
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
 		if(id <= 0)
-			return new ModelAndView("redirect:/quan-tri/danh-sach-tac-gia/delete-failed");
+			return new ModelAndView("redirect:/quan-tri/danh-sach-tac-gia");
 		
 		if(bookAuthorServiceImpl.DeleteBookAuthor(id))
 			return new ModelAndView("redirect:/quan-tri/danh-sach-tac-gia/delete-success");
