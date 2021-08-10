@@ -255,6 +255,10 @@ public class BookManagementController {
 				modelAndView.addObject("state", "Thêm thành công");
 			else if(message.equals("add-failed"))
 				modelAndView.addObject("state", "Thêm thất bại");
+			else if(message.equals("delete-success"))
+				modelAndView.addObject("state", "Xóa thành công");
+			else if(message.equals("delete-failed"))
+				modelAndView.addObject("state", "Xóa thất bại");
 			else 
 				modelAndView.addObject("state", "Không xác định được nội dung thông báo");
 		}
@@ -275,7 +279,7 @@ public class BookManagementController {
 		return null;
 	}
 	
-	@RequestMapping(value = "quan-tri/xoa-hinh-anh-cua-sach/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "quan-tri/xoa-hinh-anh-cua-sach", method = RequestMethod.POST)
 	public ModelAndView DeleteImage(HttpSession httpSession, @RequestParam(value = "id", required = true) long id) {
 		Object obj = httpSession.getAttribute("loginState");
 		if(obj == null)
@@ -285,8 +289,13 @@ public class BookManagementController {
 		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
+		if(id <= 0)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
 		
-		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/{id}");
+		if(bookServiceImpl.DeleteImage(id))
+			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + id + "/delete-success");
+		
+		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + id + "/delete-failed");
 	}
 	
 	@RequestMapping(value = {"quan-tri/chinh-sua-sach/{id}", "quan-tri/chinh-sua-sach/{id}/{message}"}, method = RequestMethod.GET)

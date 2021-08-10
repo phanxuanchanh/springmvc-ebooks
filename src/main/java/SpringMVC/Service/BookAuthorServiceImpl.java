@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import SpringMVC.DAO.AuthorContributeDAO;
 import SpringMVC.DAO.BookAuthorDAO;
 import SpringMVC.Entity.BookAuthor;
 
@@ -12,6 +13,9 @@ import SpringMVC.Entity.BookAuthor;
 public class BookAuthorServiceImpl implements IBookAuthorService {
 	@Autowired
 	private BookAuthorDAO bookAuthorDAO;
+	
+	@Autowired
+	private AuthorContributeDAO authorContributeDAO;
 
 	public List<BookAuthor> GetBookAuthors() {
 		return bookAuthorDAO.GetBookAuthors();
@@ -36,7 +40,7 @@ public class BookAuthorServiceImpl implements IBookAuthorService {
 	}
 
 	public boolean DeleteBookAuthor(long id) {
-		if (bookAuthorDAO.IsExistBookAuthorById(id))
+		if (bookAuthorDAO.IsExistBookAuthorById(id) && !authorContributeDAO.IsExistAuthorContributeByBookAuthorId(id))
 			return bookAuthorDAO.DeleteBookAuthor(id);
 		return false;
 	}

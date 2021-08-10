@@ -21,7 +21,7 @@
 					${ state }
 					<div>
 						<a class="text-white-50 small"
-							href="<c:url value="/quan-tri/tao-moi-sach"></c:url>">Tắt
+							href="<c:url value="/quan-tri/hinh-anh-cua-sach/${ book.ID }"></c:url>">Tắt
 							thông báo này</a>
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 							<td><c:url var="post_url" value="/quan-tri/xoa-hinh-anh-cua-sach"></c:url>
 								<form:form id="deleteBookImage" method="POST"
 									action="${ post_url }">
-									<input type="hidden" name="id" value="${ item.ID }" />
+									<input type="hidden" name="id" value="${ book.ID }" />
 									<button type="submit" class="btn btn-danger">Xóa</button>
 								</form:form></td>
 						</tr>

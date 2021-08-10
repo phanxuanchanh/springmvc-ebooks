@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import SpringMVC.DAO.BookDAO;
 import SpringMVC.DAO.CategoryDAO;
 import SpringMVC.Entity.Category;
 
@@ -12,6 +13,9 @@ import SpringMVC.Entity.Category;
 public class CategoryServiceImpl implements ICategoryService {
 	@Autowired
 	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	private BookDAO bookDAO;
 
 	public List<Category> GetCategories() {
 		return categoryDAO.GetCategories();
@@ -36,8 +40,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	public boolean DeleteCategory(int id) {
-		if (categoryDAO.IsExistCategoryById(id)) {
-			//Kiểm tra đi�?u kiện ràng buộc
+		if (categoryDAO.IsExistCategoryById(id) && !bookDAO.IsExistBookByCategoryId(id)) {
 			return categoryDAO.DeleteCategory(id);
 		}
 		return false;

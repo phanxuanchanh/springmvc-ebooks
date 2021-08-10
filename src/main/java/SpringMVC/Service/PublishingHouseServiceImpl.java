@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import SpringMVC.DAO.BookDAO;
 import SpringMVC.DAO.PublishingHouseDAO;
 import SpringMVC.Entity.PublishingHouse;
 
@@ -12,6 +13,9 @@ import SpringMVC.Entity.PublishingHouse;
 public class PublishingHouseServiceImpl implements IPublishingHouseService {
 	@Autowired
 	private PublishingHouseDAO publishingHouseDAO;
+	
+	@Autowired
+	private BookDAO bookDAO;
 
 	public List<PublishingHouse> GetPublishingHouses() {
 		return publishingHouseDAO.GetPublishingHouses();
@@ -36,7 +40,7 @@ public class PublishingHouseServiceImpl implements IPublishingHouseService {
 	}
 
 	public boolean DeletePublishingHouse(long id) {
-		if (publishingHouseDAO.IsExistPublishingHouseById(id))
+		if (publishingHouseDAO.IsExistPublishingHouseById(id) && !bookDAO.IsExistBookByPublishingHouseId(id))
 			return publishingHouseDAO.DeletePublishingHouse(id);
 		return false;
 	}

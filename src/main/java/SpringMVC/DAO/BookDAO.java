@@ -111,4 +111,16 @@ public class BookDAO {
 		int count = jdbcTemplate.queryForObject(query, new Object[] { name }, Integer.class);
 		return (count > 0);
 	}
+	
+	public boolean IsExistBookByCategoryId(int categoryId) {
+		String query = "Select count(*) from Book where categoryId = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { categoryId }, Integer.class);
+		return (count > 0);
+	}
+	
+	public boolean IsExistBookByPublishingHouseId(long publishingHouseId) {
+		String query = "Select count(*) from Book where publishingHouseId = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { publishingHouseId }, Integer.class);
+		return (count > 0);
+	}
 }

@@ -151,7 +151,7 @@ public class BookServiceImpl implements IBookService {
 		if(!bookAuthorDAO.IsExistBookAuthorById(authorContribute.getBookAuthorId()))
 			return false;
 		
-		if(authorContributeDAO.IsExistAuthorContributeById(authorContribute.getBookAuthorId(), authorContribute.getBookId()))
+		if(authorContributeDAO.IsExistAuthorContribute(authorContribute.getBookAuthorId(), authorContribute.getBookId()))
 			return false;
 		
 		return authorContributeDAO.CreateAuthorContribute(authorContribute);
@@ -171,8 +171,16 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	public boolean DeleteImage(long id) {
-		if (bookDAO.IsExistBookById(id))
+		if (bookDAO.IsExistBookById(id)) {
+			Book book = bookDAO.GetBook(id);
+			if(book.getImg() == null)
+				return false;
+			
+			if(book.getImg().trim().length() == 0)
+				return false;
+			
 			return bookDAO.DeleteImage(id);
+		}
 		return false;
 	}
 

@@ -69,9 +69,21 @@ public class AuthorContributeDAO {
 		return count;
 	}
 
-	public boolean IsExistAuthorContributeById(long bookAuthorId, long bookId) {
+	public boolean IsExistAuthorContribute(long bookAuthorId, long bookId) {
 		String query = "Select count(*) from AuthorContribute where bookAuthorId = ? and bookId = ?";
 		int count = jdbcTemplate.queryForObject(query, new Object[] { bookAuthorId, bookId }, Integer.class);
+		return (count > 0);
+	}
+	
+	public boolean IsExistAuthorContributeByBookId(long bookId) {
+		String query = "Select count(*) from AuthorContribute where bookId = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { bookId }, Integer.class);
+		return (count > 0);
+	}
+	
+	public boolean IsExistAuthorContributeByBookAuthorId(long bookAuthorId) {
+		String query = "Select count(*) from AuthorContribute where bookAuthorId = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] { bookAuthorId }, Integer.class);
 		return (count > 0);
 	}
 }
