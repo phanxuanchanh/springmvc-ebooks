@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import SpringMVC.DTO.BookInfo;
+import SpringMVC.DTO.ImageUpload;
 import SpringMVC.Entity.AuthorContribute;
 import SpringMVC.Entity.Book;
 import SpringMVC.Service.BookAuthorServiceImpl;
@@ -22,6 +22,7 @@ import SpringMVC.Service.CategoryServiceImpl;
 import SpringMVC.Service.PublishingHouseServiceImpl;
 import SpringMVC.Validator.AuthorContributeValidator;
 import SpringMVC.Validator.BookValidator;
+import SpringMVC.Validator.ImageUploadValidator;
 
 @Controller
 public class BookManagementController {
@@ -181,7 +182,7 @@ public class BookManagementController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "quan-tri/them-tac-gia-cua-sach/{id}", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	@RequestMapping(value = "quan-tri/them-tac-gia-cua-sach", method = RequestMethod.POST, produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public ModelAndView AddBookAuthor(HttpSession httpSession, @ModelAttribute("authorContribute") AuthorContribute authorContribute, BindingResult bindingResult,AuthorContributeValidator authorContributeValidator) {
 		Object obj = httpSession.getAttribute("loginState");
 		if(obj == null)
@@ -204,9 +205,9 @@ public class BookManagementController {
 		}
 
 		if(bookServiceImpl.AddBookAuthor(authorContribute))
-			return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/{id}/add-success");
+			return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/" + authorContribute.getBookId() + "/add-success");
 		
-		return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/{id}/add-failed");
+		return new ModelAndView("redirect:/quan-tri/tac-gia-cua-sach/" + authorContribute.getBookId() + "/add-failed");
 	}	
 	
 	@RequestMapping(value = "quan-tri/xoa-tat-ca-tac-gia-cua-sach", method = RequestMethod.POST)
@@ -250,6 +251,7 @@ public class BookManagementController {
 		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
 		modelAndView.addObject("username", username);
 		modelAndView.addObject("book", book);
+		modelAndView.addObject("imageUpload", new ImageUpload(book.getID(), null));
 		if(message != null) {
 			if(message.equals("add-success"))
 				modelAndView.addObject("state", "Thêm thành công");
@@ -265,8 +267,8 @@ public class BookManagementController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "quan-tri/them-hinh-anh-cho-sach/{id}", method = RequestMethod.POST)
-	public ModelAndView AddImage(HttpSession httpSession, @RequestParam("file") CommonsMultipartFile file) {
+	@RequestMapping(value = "quan-tri/them-hinh-anh-cua-sach", method = RequestMethod.POST)
+	public ModelAndView AddImage(HttpSession httpSession, @ModelAttribute("imageUpload") ImageUpload imageUpload, BindingResult bindingResult, ImageUploadValidator imageUploadValidator) {
 		Object obj = httpSession.getAttribute("loginState");
 		if(obj == null)
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
@@ -275,8 +277,19 @@ public class BookManagementController {
 		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
-		String fileName = file.getOriginalFilename();
-		return null;
+		imageUploadValidator.validate(imageUpload, bindingResult);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/edit-image");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			Book book = bookServiceImpl.GetBook(imageUpload.getBookId());
+			modelAndView.addObject("book", book);
+			modelAndView.addObject("imageUpload", imageUpload);
+			return modelAndView;
+		}
+		
+		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
 	}
 	
 	@RequestMapping(value = "quan-tri/xoa-hinh-anh-cua-sach", method = RequestMethod.POST)

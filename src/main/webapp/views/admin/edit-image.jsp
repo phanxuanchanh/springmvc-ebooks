@@ -33,19 +33,20 @@
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
 		<h6 class="m-0 font-weight-bold text-primary">Thêm hình ảnh cho
-			sách</h6>
+			sách "${ book.name }"</h6>
 	</div>
 	<div class="card-body">
-		<c:url var="post_url" value="/quan-tri/them-hinh-anh-cho-sach/{id}"></c:url>
-		<form:form method="POST" action="${ post_url }"
+		<c:url var="post_url" value="/quan-tri/them-hinh-anh-cua-sach"></c:url>
+		<form:form method="POST" action="${ post_url }" modelAttribute="imageUpload"
 			enctype="multipart/form-data">
 			<div class="form-horizontal">
 
-				<input type="hidden" name="ID" value="${ book.ID }" />
+				<form:hidden path="bookId"/>
 				<div class="form-group">
-					<label class="control-label" for="name">Chọn hình ảnh</label>
+					<label class="control-label" for="commonsMultipartFile">Chọn hình ảnh</label>
 					<div>
-						<input type="file" name="file" class="form-control" />
+						<input type="file" id="commonsMultipartFile" name="commonsMultipartFile" class="form-control"> 
+						<form:errors path="commonsMultipartFile" cssClass="field-validation-valid text-danger"/>
 					</div>
 				</div>
 
@@ -89,5 +90,13 @@
 		<a class="btn btn-primary"
 			href="<c:url value="/quan-tri/danh-sach-sach"></c:url>">Quay về
 			danh sách</a>
+		<a class="btn btn-primary"
+			href="<c:url value="/quan-tri/chi-tiet-sach/${ book.ID }"></c:url>">Xem chi tiết</a>
+		<a class="btn btn-success"
+			href="<c:url value="/quan-tri/chinh-sua-sach/${ book.ID }"></c:url>">Chỉnh sửa</a>
+		<a class="btn btn-success"
+			href="<c:url value="/quan-tri/pdf-cua-sach/${ book.ID }"></c:url>">PDF</a>
+		<a class="btn btn-success"
+			href="<c:url value="/quan-tri/tac-gia-cua-sach/${ book.ID }"></c:url>">Tác giả</a>
 	</div>
 </div>

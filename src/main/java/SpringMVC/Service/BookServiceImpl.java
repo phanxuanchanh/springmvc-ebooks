@@ -179,7 +179,9 @@ public class BookServiceImpl implements IBookService {
 			if(book.getImg().trim().length() == 0)
 				return false;
 			
-			return bookDAO.DeleteImage(id);
+			if(bookDAO.DeleteImage(id)) {
+				
+			}
 		}
 		return false;
 	}

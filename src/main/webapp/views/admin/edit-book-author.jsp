@@ -35,7 +35,7 @@
 		<h6 class="m-0 font-weight-bold text-primary">Thêm tác giả cho sách "${ bookInfo.name }"</h6>
 	</div>
 	<div class="card-body">
-		<c:url var="post_url" value="/quan-tri/them-tac-gia-cua-sach/${bookInfo.ID}"></c:url>
+		<c:url var="post_url" value="/quan-tri/them-tac-gia-cua-sach"></c:url>
 		<form:form method="POST" action="${ post_url }" modelAttribute="authorContribute">
 			<div class="form-horizontal">
 
@@ -111,7 +111,5 @@
 			href="<c:url value="/quan-tri/hinh-anh-cua-sach/${ bookInfo.ID }"></c:url>">Hình ảnh</a>
 		<a class="btn btn-success"
 			href="<c:url value="/quan-tri/pdf-cua-sach/${ bookInfo.ID }"></c:url>">PDF</a>
-		<a class="btn btn-success"
-			href="<c:url value="/quan-tri/tac-gia-cua-sach/${ bookInfo.ID }"></c:url>">Tác giả</a>
 	</div>
 </div>

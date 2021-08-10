@@ -75,6 +75,9 @@
 						<div class="clearfix"></div>
 
 						<div class="product-description">
+							<h3>Thể loại, nhà xuất bản</h3>
+							<p class="text-justify">Thể loại: ${ bookInfo.category.name }</p>
+							<p class="text-justify">Nhà xuất bản: ${ bookInfo.publishingHouse.name }</p>
 							<h3>Mô tả</h3>
 							<p class="text-justify">${ bookInfo.description }</p>
 						</div>
