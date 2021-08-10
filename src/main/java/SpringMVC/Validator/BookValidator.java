@@ -18,6 +18,12 @@ public class BookValidator implements Validator {
 
 		if (book.getName().length() < 3 || book.getName().length() > 50)
 			errors.rejectValue("name", "", "Tên tác giả phải có độ dài lớn hơn 3 và nhỏ hơn 50 ký tự");
+		
+		if(book.getCategoryId() <= 0)
+			errors.rejectValue("categoryId", "", "Thể loại không hợp lệ");
+		
+		if(book.getPublishingHouseId() <= 0)
+			errors.rejectValue("publishingHouseId", "", "Nhà xuất bản không hợp lệ");
 	}
 
 }

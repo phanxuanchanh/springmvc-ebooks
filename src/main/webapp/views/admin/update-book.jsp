@@ -27,7 +27,7 @@
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Chỉnh sửa sách</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Chỉnh sửa sách "${ book.name }"</h6>
 	</div>
 	<div class="card-body">
 		<c:url var="post_url" value="/quan-tri/chinh-sua-sach/${ book.ID }"></c:url>
@@ -53,20 +53,22 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label" for="description">Chọn thể loại</label>
+					<label class="control-label" for="categoryId">Chọn thể loại</label>
 					<div>
 						<form:select path="categoryId" cssClass="form-control">
 							<form:options items="${ categories }" itemValue="ID" itemLabel="name"></form:options>
 						</form:select>
+						<form:errors path="categoryId" cssClass="field-validation-valid text-danger"/>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="control-label" for="description">Chọn nhà xuất bản</label>
+					<label class="control-label" for="publishingHouseId">Chọn nhà xuất bản</label>
 					<div>
 						<form:select path="publishingHouseId" cssClass="form-control">
 							<form:options items="${ publishingHouses }" itemValue="ID" itemLabel="name"></form:options>							
 						</form:select>
+						<form:errors path="publishingHouseId" cssClass="field-validation-valid text-danger"/>
 					</div>
 				</div>
 
@@ -82,5 +84,13 @@
 		<a class="btn btn-primary"
 			href="<c:url value="/quan-tri/danh-sach-sach"></c:url>">Quay về danh
 			sách</a>
+		<a class="btn btn-primary"
+			href="<c:url value="/quan-tri/chi-tiet-sach/${ book.ID }"></c:url>">Xem chi tiết</a>
+		<a class="btn btn-success"
+			href="<c:url value="/quan-tri/hinh-anh-cua-sach/${ book.ID }"></c:url>">Hình ảnh</a>
+		<a class="btn btn-success"
+			href="<c:url value="/quan-tri/pdf-cua-sach/${ book.ID }"></c:url>">PDF</a>
+		<a class="btn btn-success"
+			href="<c:url value="/quan-tri/tac-gia-cua-sach/${ book.ID }"></c:url>">Tác giả</a>
 	</div>
 </div>

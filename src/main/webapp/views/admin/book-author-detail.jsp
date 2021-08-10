@@ -13,7 +13,7 @@
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Chi tiết tác giả</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Chi tiết tác giả "${ bookAuthor.name }"</h6>
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -47,9 +47,8 @@
 	</div>
 	<div class="card-footer">
 		<a class="btn btn-primary"
-			href="<c:url value="/quan-tri/chinh-sua-tac-gia"></c:url>">Chỉnh
-			sửa</a> | <a class="btn btn-success"
 			href="<c:url value="/quan-tri/danh-sach-tac-gia"></c:url>">Quay
-			về danh sách</a>
+			về danh sách</a> | <a class="btn btn-success"
+			href="<c:url value="/quan-tri/chinh-sua-tac-gia/${ bookAuthor.ID }"></c:url>">Chỉnh sửa</a>
 	</div>
 </div>

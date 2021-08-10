@@ -13,6 +13,9 @@ public class AuthorContributeValidator implements Validator {
 
 	public void validate(Object target, Errors errors) {
 		AuthorContribute authorContribute = (AuthorContribute) target;
+		if(authorContribute.getBookAuthorId() <= 0)
+			errors.rejectValue("bookAuthorId", "", "Tác giả không hợp lệ");
+		
 		if (authorContribute.getRole().trim().length() == 0)
 			errors.rejectValue("role", "", "Tên vai trò không được rỗng");
 

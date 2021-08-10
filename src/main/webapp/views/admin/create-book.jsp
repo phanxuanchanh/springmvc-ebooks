@@ -57,6 +57,7 @@
 						<form:select path="categoryId" cssClass="form-control">
 							<form:options items="${ categories }" itemValue="ID" itemLabel="name"></form:options>
 						</form:select>
+						<form:errors path="categoryId" cssClass="field-validation-valid text-danger"/>
 					</div>
 				</div>
 				
@@ -66,6 +67,7 @@
 						<form:select path="publishingHouseId" cssClass="form-control">
 							<form:options items="${ publishingHouses }" itemValue="ID" itemLabel="name"></form:options>							
 						</form:select>
+						<form:errors path="publishingHouseId" cssClass="field-validation-valid text-danger"/>
 					</div>
 				</div>
 

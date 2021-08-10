@@ -13,7 +13,7 @@
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Chi tiết sách</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Chi tiết sách "${ bookInfo.name }"</h6>
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -81,9 +81,15 @@
 	</div>
 	<div class="card-footer">
 		<a class="btn btn-primary"
-			href="<c:url value="/quan-tri/chinh-sua-sach"></c:url>">Chỉnh sửa</a>
-		| <a class="btn btn-success"
 			href="<c:url value="/quan-tri/danh-sach-sach"></c:url>">Quay về
 			danh sách</a>
+		| <a class="btn btn-success"
+			href="<c:url value="/quan-tri/chinh-sua-sach/${ bookInfo.ID }"></c:url>">Chỉnh sửa</a>
+		| <a class="btn btn-success"
+			href="<c:url value="/quan-tri/hinh-anh-cua-sach/${ bookInfo.ID }"></c:url>">Hình ảnh</a>
+		| <a class="btn btn-success"
+			href="<c:url value="/quan-tri/pdf-cua-sach/${ bookInfo.ID }"></c:url>">PDF</a>
+		| <a class="btn btn-success"
+			href="<c:url value="/quan-tri/tac-gia-cua-sach/${ bookInfo.ID }"></c:url>">Tác giả</a>
 	</div>
 </div>

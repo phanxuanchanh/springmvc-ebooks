@@ -13,7 +13,7 @@
 
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Chi tiết thể loại</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Chi tiết thể loại "${ category.name }"</h6>
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -39,9 +39,9 @@
 	</div>
 	<div class="card-footer">
 		<a class="btn btn-primary"
-			href="<c:url value="/quan-tri/chinh-sua-the-loai"></c:url>">Chỉnh sửa</a> | <a
-			class="btn btn-success"
 			href="<c:url value="/quan-tri/danh-sach-the-loai"></c:url>">Quay về danh
-			sách</a>
+			sách</a> | <a
+			class="btn btn-success"
+			href="<c:url value="/quan-tri/chinh-sua-the-loai/${ category.ID }"></c:url>">Chỉnh sửa</a>
 	</div>
 </div>
