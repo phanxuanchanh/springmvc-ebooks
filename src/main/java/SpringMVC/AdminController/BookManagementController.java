@@ -1,5 +1,9 @@
 package SpringMVC.AdminController;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import SpringMVC.DTO.BookInfo;
+import SpringMVC.DTO.FileUpload;
 import SpringMVC.DTO.ImageUpload;
 import SpringMVC.Entity.AuthorContribute;
 import SpringMVC.Entity.Book;
@@ -268,8 +274,9 @@ public class BookManagementController {
 	}
 	
 	@RequestMapping(value = "quan-tri/them-hinh-anh-cua-sach", method = RequestMethod.POST)
-	public ModelAndView AddImage(HttpSession httpSession, @ModelAttribute("imageUpload") ImageUpload imageUpload, BindingResult bindingResult, ImageUploadValidator imageUploadValidator) {
-		Object obj = httpSession.getAttribute("loginState");
+	public ModelAndView AddImage(HttpServletRequest httpServletRequest, @ModelAttribute("imageUpload") ImageUpload imageUpload, BindingResult bindingResult, ImageUploadValidator imageUploadValidator) {
+		
+		Object obj = httpServletRequest.getSession().getAttribute("loginState");
 		if(obj == null)
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
@@ -289,7 +296,20 @@ public class BookManagementController {
 			return modelAndView;
 		}
 		
-		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+		CommonsMultipartFile commonsMultipartFile = imageUpload.getCommonsMultipartFile();
+		String dir = httpServletRequest.getServletContext().getRealPath("/");
+		File file = new File(dir + File.separator + commonsMultipartFile.getOriginalFilename());
+		if(file.exists())
+			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+		
+		try {
+			commonsMultipartFile.transferTo(file);
+			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-success");
+		} catch (IllegalStateException e) {
+			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+		} catch (IOException e) {
+			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+		}
 	}
 	
 	@RequestMapping(value = "quan-tri/xoa-hinh-anh-cua-sach", method = RequestMethod.POST)
