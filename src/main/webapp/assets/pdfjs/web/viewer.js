@@ -49,7 +49,7 @@ const defaultOptions = {
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   defaultUrl: {
-    value: "compressed.tracemonkey-pldi-09.pdf",
+    value: pdfUrl, // Link PDF
     kind: OptionKind.VIEWER
   },
   defaultZoomValue: {
@@ -202,7 +202,7 @@ const defaultOptions = {
     kind: OptionKind.WORKER
   },
   workerSrc: {
-    value: "../build/pdf.worker.js",
+    value: pdfWorkerJsUrl,  //Link pdf.worker.js
     kind: OptionKind.WORKER
   }
 };
@@ -216,7 +216,7 @@ const defaultOptions = {
     kind: OptionKind.VIEWER
   };
   defaultOptions.sandboxBundleSrc = {
-    value: "../build/pdf.sandbox.js",
+    value: pdfSandboxJsUrl,
     kind: OptionKind.VIEWER
   };
   defaultOptions.renderer.kind += OptionKind.PREFERENCE;

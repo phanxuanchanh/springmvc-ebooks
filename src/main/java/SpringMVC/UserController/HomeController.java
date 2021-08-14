@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import SpringMVC.DTO.BookInfo;
+import SpringMVC.Entity.Book;
 import SpringMVC.Entity.Category;
 import SpringMVC.Service.BookServiceImpl;
 import SpringMVC.Service.CategoryServiceImpl;
@@ -106,6 +107,30 @@ public class HomeController {
 		modelAndView.addObject("bookInfo", bookInfo);
 		modelAndView.addObject("bookNumber", bookServiceImpl.CountBook());
 		modelAndView.addObject("booksByCategory", bookServiceImpl.GetBooksByCategoryId(bookInfo.getCategory().getID()));
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/xem-sach-online/{id}", method = RequestMethod.GET)
+	public ModelAndView ReadBook(HttpSession httpSession, @PathVariable long id) {
+		if(id <= 0)
+			return new ModelAndView("redirect:/");
+		
+		Book book = bookServiceImpl.GetBook(id);
+		if(book == null)
+			return new ModelAndView("redirect:/");
+		
+		if(book.getPdf() == null)
+			return new ModelAndView("redirect:/");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/read-book");
+		Object obj = httpSession.getAttribute("loginState");
+		boolean isLogged = false;
+		if(obj != null)
+			isLogged = true;
+		
+		modelAndView.addObject("isLogged", isLogged);
+		modelAndView.addObject("book", book);
 		return modelAndView;
 	}
 }

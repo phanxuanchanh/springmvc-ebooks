@@ -1,4 +1,7 @@
 <decorators defaultdir="/views/layouts">
+	<excludes>
+		<pattern>/xem-sach-online</pattern>
+	</excludes>
 	<decorator name="user" page="user.jsp">
 		<pattern>/</pattern>
 	</decorator>
@@ -8,4 +11,5 @@
 	<decorator name="admin" page="admin.jsp">
 		<pattern>/quan-tri/*</pattern>
 	</decorator>
+	<decorator name="no" page=""></decorator>
 </decorators>

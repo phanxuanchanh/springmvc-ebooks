@@ -78,9 +78,7 @@
 										&nbsp; &nbsp; <span>Page: <span id="page_num"></span> /
 											<span id="page_count"></span></span>
 									</div>
-
-									<canvas id="the-canvas"></canvas>
-
+									<canvas id="pdf"></canvas>
 								</c:if>
 						</tr>
 						<tr>
@@ -115,7 +113,7 @@
 
 <c:if test="${ book.pdf != null }">
 	<style type="text/css">
-#the-canvas {
+#pdf {
 	border: 1px solid black;
 	direction: ltr;
 	width: 150px;
@@ -135,7 +133,7 @@
 		pdfjsLib.GlobalWorkerOptions.workerSrc = "<c:url value="/assets/pdfjs/build/pdf.worker.js"></c:url>";
 
 		var pdfDoc = null, pageNum = 1, pageRendering = false, pageNumPending = null, scale = 0.8, canvas = document
-				.getElementById("the-canvas"), ctx = canvas.getContext("2d");
+				.getElementById("pdf"), ctx = canvas.getContext("2d");
 
 		/**
 		 * Get page info from document, resize canvas accordingly, and render page.

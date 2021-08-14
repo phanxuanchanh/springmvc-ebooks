@@ -42,7 +42,12 @@
 						<div class="detail-cart-button row clearfix">
 							<div class="pull-left col-md-6 col-sm-5 col-xs-12">
 								<div class="detail-book-price">
-									<span class="price">Xem trực tuyến</span>
+									<c:if test="${ bookInfo.pdf == null }">
+										<a href="#pdf-not-found" class="price" onclick="showPDFNotFound();">Xem trực tuyến</a>
+									</c:if>
+									<c:if test="${ bookInfo.pdf != null }">
+										<a href="<c:url value="/xem-sach-online/${ bookInfo.ID }"></c:url>" class="price">Xem trực tuyến</a>
+									</c:if>
 								</div>
 								<!-- /.detail-book-price -->
 							</div>
@@ -50,11 +55,18 @@
 
 							<div class="pull-right col-md-6 col-sm-7 col-xs-12">
 								<div class="row product-actions">
-
-									<a
-										href="<c:url value="/file-upload/pdfs/${ bookInfo.pdf }"></c:url>"
-										class="col-sm-6 btn btn-primary btn-addToCart"><i
-										class="icon-plus fa fa-plus-circle"></i>Tải xuống</a>
+									<c:if test="${ bookInfo.pdf == null }">
+										<a href="#pdf-not-found"
+											class="col-sm-6 btn btn-primary btn-addToCart"
+											onclick="showPDFNotFound();"><i
+											class="icon-plus fa fa-plus-circle"></i>Tải xuống</a>
+									</c:if>
+									<c:if test="${ bookInfo.pdf != null }">
+										<a
+											href="<c:url value="/file-upload/pdfs/${ bookInfo.pdf }"></c:url>"
+											class="col-sm-6 btn btn-primary btn-addToCart"><i
+											class="icon-plus fa fa-plus-circle"></i>Tải xuống</a>
+									</c:if>
 									<button title="Thích"
 										class="hidden-xs btn btn-secondary btn-add-to-wishlist col-xs-2 "
 										type="button" onclick="upvote()">
@@ -192,3 +204,11 @@
 	<!-- ========================================= RELATE BOOKS MODULE : END ========================================= -->
 </div>
 <!-- /.book-detail page -->
+
+<c:if test="${ bookInfo.pdf == null }">
+	<script type="text/javascript">
+		function showPDFNotFound() {
+			alert("PDF của sách này chưa sẵn có!");
+		}
+	</script>
+</c:if>

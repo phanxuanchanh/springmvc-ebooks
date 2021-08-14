@@ -1,25 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<meta name="decorator" content="no" />
+
 <!DOCTYPE html>
-<!--
-Copyright 2012 Mozilla Foundation
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-Adobe CMap resources are covered by their own copyright but the same license:
-
-    Copyright 1990-2015 Adobe Systems Incorporated.
-
-See https://github.com/adobe-type-tools/cmap-resources
--->
 <html dir="ltr" mozdisallowselectionprint>
 <head>
 <meta charset="utf-8">
@@ -27,20 +11,23 @@ See https://github.com/adobe-type-tools/cmap-resources
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="google" content="notranslate">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>PDF.js viewer</title>
+<title>${ book.name }</title>
 
 
-<link rel="stylesheet" href="viewer.css">
-
+<link rel="stylesheet" href="<c:url value="/assets/pdfjs/web/viewer.css"></c:url>">
 
 <!-- This snippet is used in production (included from viewer.html) -->
 <link rel="resource" type="application/l10n"
-	href="locale/locale.properties">
-<script src="../build/pdf.js"></script>
+	href="<c:url value="/assets/pdfjs/web/locale/locale.properties"></c:url>">
+	
+<script type="text/javascript">
+	var pdfUrl = "<c:url value="/file-upload/pdfs/${ book.pdf }"></c:url>";
+	var pdfWorkerJsUrl = "<c:url value="/assets/pdfjs/build/pdf.worker.js"></c:url>";
+	var pdfSandboxJsUrl = "<c:url value="/assets/pdfjs/build/pdf.sandbox.js"></c:url>";
+</script>
 
-
-<script src="viewer.js"></script>
-
+<script src="<c:url value="/assets/pdfjs/build/pdf.js"></c:url>"></script>
+<script src="<c:url value="/assets/pdfjs/web/viewer.js"></c:url>"></script>
 </head>
 
 <body tabindex="1">
