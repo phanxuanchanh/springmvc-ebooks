@@ -18,8 +18,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import SpringMVC.DTO.BookInfo;
-import SpringMVC.DTO.FileUpload;
 import SpringMVC.DTO.ImageUpload;
+import SpringMVC.DTO.PdfUpload;
 import SpringMVC.Entity.AuthorContribute;
 import SpringMVC.Entity.Book;
 import SpringMVC.Service.BookAuthorServiceImpl;
@@ -29,6 +29,7 @@ import SpringMVC.Service.PublishingHouseServiceImpl;
 import SpringMVC.Validator.AuthorContributeValidator;
 import SpringMVC.Validator.BookValidator;
 import SpringMVC.Validator.ImageUploadValidator;
+import SpringMVC.Validator.PdfUploadValidator;
 
 @Controller
 public class BookManagementController {
@@ -284,37 +285,44 @@ public class BookManagementController {
 		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
+		Book book = bookServiceImpl.GetBook(imageUpload.getBookId());
+		if(book == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
 		imageUploadValidator.validate(imageUpload, bindingResult);
 		if (bindingResult.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("admin/edit-image");
 			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
 			modelAndView.addObject("username", username);
-			Book book = bookServiceImpl.GetBook(imageUpload.getBookId());
 			modelAndView.addObject("book", book);
 			modelAndView.addObject("imageUpload", imageUpload);
 			return modelAndView;
 		}
 		
 		CommonsMultipartFile commonsMultipartFile = imageUpload.getCommonsMultipartFile();
-		String dir = httpServletRequest.getServletContext().getRealPath("/");
-		File file = new File(dir + File.separator + commonsMultipartFile.getOriginalFilename());
-		if(file.exists())
-			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
-		
-		try {
-			commonsMultipartFile.transferTo(file);
-			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-success");
-		} catch (IllegalStateException e) {
-			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
-		} catch (IOException e) {
-			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+		if(bookServiceImpl.AddImage(imageUpload.getBookId(), commonsMultipartFile.getOriginalFilename())){
+			String dir = httpServletRequest.getServletContext().getRealPath("/file-upload/images");
+			File file = new File(dir + File.separator + commonsMultipartFile.getOriginalFilename());
+			if(file.exists())
+				return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+			
+			try {
+				commonsMultipartFile.transferTo(file);
+				return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-success");
+			} catch (IllegalStateException e) {
+				return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+			} catch (IOException e) {
+				return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
+			}
 		}
+		
+		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + imageUpload.getBookId() + "/add-failed");
 	}
 	
 	@RequestMapping(value = "quan-tri/xoa-hinh-anh-cua-sach", method = RequestMethod.POST)
-	public ModelAndView DeleteImage(HttpSession httpSession, @RequestParam(value = "id", required = true) long id) {
-		Object obj = httpSession.getAttribute("loginState");
+	public ModelAndView DeleteImage(HttpServletRequest httpServletRequest, @RequestParam(value = "id", required = true) long id) {
+		Object obj = httpServletRequest.getSession().getAttribute("loginState");
 		if(obj == null)
 			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
 		
@@ -325,11 +333,143 @@ public class BookManagementController {
 		if(id <= 0)
 			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
 		
-		if(bookServiceImpl.DeleteImage(id))
+		Book book = bookServiceImpl.GetBook(id);
+		if(book == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		if(book.getImg().equals("book-default.png"))
+			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + id + "/delete-failed");
+		
+		if(bookServiceImpl.DeleteImage(id)) {
+			String dir = httpServletRequest.getServletContext().getRealPath("/file-upload/images");
+			File file = new File(dir + File.separator + book.getImg());
+			if(file.exists())
+				file.delete();
 			return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + id + "/delete-success");
+		}
 		
 		return new ModelAndView("redirect:/quan-tri/hinh-anh-cua-sach/" + id + "/delete-failed");
 	}
+	
+	
+	
+	@RequestMapping(value = {"quan-tri/pdf-cua-sach/{id}", "quan-tri/pdf-cua-sach/{id}/{message}"}, method = RequestMethod.GET)
+	public ModelAndView EditPdf(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {
+		Object obj = httpSession.getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		if (id <= 0)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		Book book = bookServiceImpl.GetBook(id);
+		if (book == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin/edit-pdf");
+		String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+		modelAndView.addObject("username", username);
+		modelAndView.addObject("book", book);
+		modelAndView.addObject("pdfUpload", new PdfUpload(book.getID(), null));
+		if(message != null) {
+			if(message.equals("add-success"))
+				modelAndView.addObject("state", "Thêm thành công");
+			else if(message.equals("add-failed"))
+				modelAndView.addObject("state", "Thêm thất bại");
+			else if(message.equals("delete-success"))
+				modelAndView.addObject("state", "Xóa thành công");
+			else if(message.equals("delete-failed"))
+				modelAndView.addObject("state", "Xóa thất bại");
+			else 
+				modelAndView.addObject("state", "Không xác định được nội dung thông báo");
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "quan-tri/them-pdf-cua-sach", method = RequestMethod.POST)
+	public ModelAndView AddPdf(HttpServletRequest httpServletRequest, @ModelAttribute("pdfUpload") PdfUpload pdfUpload, BindingResult bindingResult, PdfUploadValidator pdfUploadValidator) {
+		
+		Object obj = httpServletRequest.getSession().getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		Book book = bookServiceImpl.GetBook(pdfUpload.getBookId());
+		if(book == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		pdfUploadValidator.validate(pdfUpload, bindingResult);
+		if (bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("admin/edit-pdf");
+			String username = loginState.replace("logged:true;username:", "").replace(";role:Admin", "");
+			modelAndView.addObject("username", username);
+			modelAndView.addObject("book", book);
+			modelAndView.addObject("pdfUpload", pdfUpload);
+			return modelAndView;
+		}
+		
+		CommonsMultipartFile commonsMultipartFile = pdfUpload.getCommonsMultipartFile();
+		if(bookServiceImpl.AddPdf(pdfUpload.getBookId(), commonsMultipartFile.getOriginalFilename())){
+			String dir = httpServletRequest.getServletContext().getRealPath("/file-upload/pdfs");
+			File file = new File(dir + File.separator + commonsMultipartFile.getOriginalFilename());
+			if(file.exists())
+				return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + pdfUpload.getBookId() + "/add-failed");
+			
+			try {
+				commonsMultipartFile.transferTo(file);
+				return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + pdfUpload.getBookId() + "/add-success");
+			} catch (IllegalStateException e) {
+				return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + pdfUpload.getBookId() + "/add-failed");
+			} catch (IOException e) {
+				return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + pdfUpload.getBookId() + "/add-failed");
+			}
+		}
+		
+		return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + pdfUpload.getBookId() + "/add-failed");
+	}
+	
+	@RequestMapping(value = "quan-tri/xoa-pdf-cua-sach", method = RequestMethod.POST)
+	public ModelAndView DeletePdf(HttpServletRequest httpServletRequest, @RequestParam(value = "id", required = true) long id) {
+		Object obj = httpServletRequest.getSession().getAttribute("loginState");
+		if(obj == null)
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		String loginState = obj.toString();
+		if(!loginState.matches("logged:true;username:([a-zA-Z0-9]{1,});role:Admin"))
+			return new ModelAndView("redirect:/tai-khoan/dang-nhap");
+		
+		if(id <= 0)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		Book book = bookServiceImpl.GetBook(id);
+		if(book == null)
+			return new ModelAndView("redirect:/quan-tri/danh-sach-sach");
+		
+		if(book.getPdf() == null)
+			return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + id + "/delete-failed");
+		
+		if(bookServiceImpl.DeletePdf(id)) {
+			String dir = httpServletRequest.getServletContext().getRealPath("/file-upload/pdfs");
+			File file = new File(dir + File.separator + book.getPdf());
+			if(file.exists())
+				file.delete();
+			return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + id + "/delete-success");
+		}
+		
+		return new ModelAndView("redirect:/quan-tri/pdf-cua-sach/" + id + "/delete-failed");
+	}
+	
+	
+	
 	
 	@RequestMapping(value = {"quan-tri/chinh-sua-sach/{id}", "quan-tri/chinh-sua-sach/{id}/{message}"}, method = RequestMethod.GET)
 	public ModelAndView UpdateBook(HttpSession httpSession, @PathVariable long id, @PathVariable(required = false) String message) {

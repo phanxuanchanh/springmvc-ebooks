@@ -27,7 +27,7 @@
 
 <!-- Custom styles for this template-->
 <link href="<c:url value="/assets/admin/css/sb-admin-2.min.css"></c:url>" rel="stylesheet">
-
+<script src="<c:url value="/assets/pdfjs/build/pdf.js"></c:url>"></script>
 </head>
 
 <body id="page-top">

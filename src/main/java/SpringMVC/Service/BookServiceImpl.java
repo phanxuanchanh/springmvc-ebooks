@@ -164,9 +164,9 @@ public class BookServiceImpl implements IBookService {
 		return false;
 	}
 
-	public boolean AddImage(long id, String filePath) {
+	public boolean AddImage(long id, String fileName) {
 		if (bookDAO.IsExistBookById(id))
-			return bookDAO.AddImage(id, filePath);
+			return bookDAO.AddImage(id, fileName);
 		return false;
 	}
 
@@ -179,22 +179,28 @@ public class BookServiceImpl implements IBookService {
 			if(book.getImg().trim().length() == 0)
 				return false;
 			
-			if(bookDAO.DeleteImage(id)) {
-				
-			}
+			return bookDAO.DeleteImage(id);
 		}
 		return false;
 	}
 
-	public boolean AddPdf(long id, String filePath) {
+	public boolean AddPdf(long id, String fileName) {
 		if (bookDAO.IsExistBookById(id))
-			return bookDAO.AddPdf(id, filePath);
+			return bookDAO.AddPdf(id, fileName);
 		return false;
 	}
 
 	public boolean DeletePdf(long id) {
-		if (bookDAO.IsExistBookById(id))
+		if (bookDAO.IsExistBookById(id)) {
+			Book book = bookDAO.GetBook(id);
+			if(book.getPdf() == null)
+				return false;
+			
+			if(book.getPdf().trim().length() == 0)
+				return false;
+			
 			return bookDAO.DeletePdf(id);
+		}
 		return false;
 	}
 
