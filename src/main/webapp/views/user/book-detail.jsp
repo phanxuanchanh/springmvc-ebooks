@@ -46,7 +46,7 @@
 										<a href="#pdf-not-found" class="price" onclick="showPDFNotFound();">Xem trực tuyến</a>
 									</c:if>
 									<c:if test="${ bookInfo.pdf != null }">
-										<a href="<c:url value="/xem-sach-online/${ bookInfo.ID }"></c:url>" class="price">Xem trực tuyến</a>
+										<a href="<c:url value="/xem-sach-online/${ bookInfo.ID }"></c:url>" target="_blank" class="price">Xem trực tuyến</a>
 									</c:if>
 								</div>
 								<!-- /.detail-book-price -->
