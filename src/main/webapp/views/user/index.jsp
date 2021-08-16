@@ -19,7 +19,8 @@
 											<div class="book-shelf">
 												<div class="add-to-cart-action hidden-xs hidden-sm">
 													<a href="#" class="add-to-cart-button"><img
-														src="<c:url value="/assets/user/images/shopping-cart.png"></c:url>" alt="" /></a>
+														src="<c:url value="/assets/user/images/shopping-cart.png"></c:url>"
+														alt="" /></a>
 												</div>
 												<!-- /.add-to-cart-action-->
 												<div class="book-cover slider-book-cover">
@@ -41,13 +42,12 @@
 											<div class="slider-caption-heading">
 												<h1 class="slider-caption-title fadeInDown-1">${ item.name }</h1>
 												<p class="slider-caption-subtitle fadeInDown-2 hidden-xs">
-												Nhấn truy cập ngay để xem nội dung
-												</p>
+													Nhấn truy cập ngay để xem nội dung</p>
 											</div>
 											<!-- /.slider-caption-heading -->
 											<div class="clearfix slider-price fadeInDown-3 hidden-xs">
 												<a class="btn btn-secondary btn-price"
-													href="/book-details/5-phuong-trinh-lam-thay-doi-the-gioi/5">Truy
+													href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">Truy
 													cập ngay</a>
 											</div>
 											<!-- /.slider-price -->
@@ -77,13 +77,13 @@
 							<div class="row sub-header" id="search">
 								<div class='col-md-12'>
 									<div class="row">
-										<form action="/search" method="get">
+										<form action="<c:url value="/tim-kiem-sach"></c:url>" method="get">
 											<div class="col-sm-8 no-padding-right">
 												<div class="input-group">
 													<span class="input-group-btn"><button
 															class="btn btn-search" type="button">
 															<i class="fa fa-search icon"></i>
-														</button></span> <input type="text" name="input"
+														</button></span> <input type="text" name="keyword"
 														class="form-control search-book"
 														placeholder="Tìm kiếm sách...">
 												</div>
@@ -175,12 +175,16 @@
 
 											<div class="book-details">
 												<h3 class="book-title" style="font-size: 16px;">
-													<a href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">${ item.name }</a>
+													<a
+														href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">${ item.name }</a>
 												</h3>
 												<div class="star-rating">
-													<i class="fa fa-star color"></i> <i
-														class="fa fa-star color"></i> <i class="fa fa-star color"></i><i
-														class="fa fa-star color"></i> <i class="fa fa-star color"></i>
+													<c:forEach var="i" begin="1" end="${ item.star }">
+														<i class="fa fa-star color"></i>
+													</c:forEach>
+													<c:forEach var="i" begin="1" end="${ 5 - item.star }">
+														<i class="fa fa-star"></i>
+													</c:forEach>
 												</div>
 												<!-- /.star-rating -->
 
@@ -267,9 +271,12 @@
 												<a href="<c:url value="/chi-tiet-sach/${item.ID }"></c:url>">${ item.name }</a>
 											</h3>
 											<div class="star-rating">
-												<i class="fa fa-star color"></i> <i class="fa fa-star color"></i>
-												<i class="fa fa-star color"></i> <i class="fa fa-star color"></i>
-												<i class="fa fa-star color"></i>
+												<c:forEach var="i" begin="1" end="${ item.star }">
+													<i class="fa fa-star color"></i>
+												</c:forEach>
+												<c:forEach var="i" begin="1" end="${ 5 - item.star }">
+													<i class="fa fa-star"></i>
+												</c:forEach>
 											</div>
 											<!-- /.star-rating -->
 

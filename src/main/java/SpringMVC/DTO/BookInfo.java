@@ -15,6 +15,7 @@ public class BookInfo {
 	private long views;
 	private long upvote;
 	private long downvote;
+	private int star;
 	private String pdf;
 	private String img;
 
@@ -81,6 +82,14 @@ public class BookInfo {
 	public void setDownvote(long downvote) {
 		this.downvote = downvote;
 	}
+	
+	public int getStar() {
+		return star;
+	}
+
+	public void setStar(int star) {
+		this.star = star;
+	}
 
 	public String getPdf() {
 		return pdf;
@@ -107,7 +116,7 @@ public class BookInfo {
 	}
 
 	public BookInfo(long iD, String name, String description, Category category, PublishingHouse publishingHouse,
-			List<BookAuthorInfo> bookAuthorInfos, long views, long upvote, long downvote, String pdf, String img) {
+			List<BookAuthorInfo> bookAuthorInfos, long views, long upvote, long downvote, int star, String pdf, String img) {
 		super();
 		ID = iD;
 		this.name = name;
@@ -118,6 +127,7 @@ public class BookInfo {
 		this.views = views;
 		this.upvote = upvote;
 		this.downvote = downvote;
+		this.star = star;
 		this.pdf = pdf;
 		this.img = img;
 	}

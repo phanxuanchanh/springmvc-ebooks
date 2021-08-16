@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import SpringMVC.Common.StarRating;
 import SpringMVC.DAO.AuthorContributeDAO;
 import SpringMVC.DAO.BookAuthorDAO;
 import SpringMVC.DAO.BookDAO;
@@ -57,12 +58,13 @@ public class BookServiceImpl implements IBookService {
 			if(book.getImg().trim().length() == 0)
 				book.setImg("book-default.png");
 			
+			StarRating starRating = new StarRating(book.getUpvote(), book.getDownvote());
 			bookInfos.add(new BookInfo(book.getID(), book.getName(), book.getDescription(), null, null, null,
-					book.getViews(), book.getUpvote(), book.getDownvote(), book.getPdf(), book.getImg()));
+					book.getViews(), book.getUpvote(), book.getDownvote(), starRating.SolveStar(), book.getPdf(), book.getImg()));
 		}
 		return bookInfos;
 	}
-	
+
 	public List<BookInfo> GetBooksByViews(int count) {
 		List<Book> books = bookDAO.GetBooksByViews(count);
 		List<BookInfo> bookInfos = new ArrayList<BookInfo>();
@@ -73,8 +75,9 @@ public class BookServiceImpl implements IBookService {
 			if(book.getImg().trim().length() == 0)
 				book.setImg("book-default.png");
 			
+			StarRating starRating = new StarRating(book.getUpvote(), book.getDownvote());
 			bookInfos.add(new BookInfo(book.getID(), book.getName(), book.getDescription(), null, null, null,
-					book.getViews(), book.getUpvote(), book.getDownvote(), book.getPdf(), book.getImg()));
+					book.getViews(), book.getUpvote(), book.getDownvote(), starRating.SolveStar(), book.getPdf(), book.getImg()));
 		}
 		return bookInfos;
 	}
@@ -89,8 +92,9 @@ public class BookServiceImpl implements IBookService {
 			if(book.getImg().trim().length() == 0)
 				book.setImg("book-default.png");
 			
+			StarRating starRating = new StarRating(book.getUpvote(), book.getDownvote());
 			bookInfos.add(new BookInfo(book.getID(), book.getName(), book.getDescription(), null, null, null,
-					book.getViews(), book.getUpvote(), book.getDownvote(), book.getPdf(), book.getImg()));
+					book.getViews(), book.getUpvote(), book.getDownvote(), starRating.SolveStar(), book.getPdf(), book.getImg()));
 		}
 		return bookInfos;
 	}
@@ -125,9 +129,9 @@ public class BookServiceImpl implements IBookService {
 			PublishingHouse publishingHouse = publishingHouseDAO.GetPublishingHouse(book.getPublishingHouseId());
 			List<BookAuthorInfo> bookAuthorInfos = bookAuthorDAO.GetBookAuthorsByBookId(book.getID());
 			
-
+			StarRating starRating = new StarRating(book.getUpvote(), book.getDownvote());
 			return new BookInfo(book.getID(), book.getName(), book.getDescription(), category, publishingHouse,
-					bookAuthorInfos, book.getViews(), book.getUpvote(), book.getDownvote(), book.getPdf(), book.getImg());
+					bookAuthorInfos, book.getViews(), book.getUpvote(), book.getDownvote(), starRating.SolveStar(), book.getPdf(), book.getImg());
 		}
 		return null;
 	}
@@ -201,6 +205,24 @@ public class BookServiceImpl implements IBookService {
 			
 			return bookDAO.DeletePdf(id);
 		}
+		return false;
+	}
+	
+	public boolean IncreaseView(long id) {
+		if (bookDAO.IsExistBookById(id))
+			return bookDAO.IncreaseView(id);
+		return false;
+	}
+	
+	public boolean Upvote(long id) {
+		if (bookDAO.IsExistBookById(id))
+			return bookDAO.Upvote(id);
+		return false;
+	}
+	
+	public boolean Downvote(long id) {
+		if (bookDAO.IsExistBookById(id))
+			return bookDAO.Downvote(id);
 		return false;
 	}
 

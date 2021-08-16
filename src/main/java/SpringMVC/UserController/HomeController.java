@@ -5,10 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import SpringMVC.DTO.BookInfo;
@@ -132,5 +135,52 @@ public class HomeController {
 		modelAndView.addObject("isLogged", isLogged);
 		modelAndView.addObject("book", book);
 		return modelAndView;
+	}
+	
+	@RequestMapping(value ="/tim-kiem-sach", method = RequestMethod.GET)
+	public ModelAndView TimKiemSach(HttpSession httpSession, @RequestParam(value = "keyword", required = true) String keyword) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("user/search-results");
+		Object obj = httpSession.getAttribute("loginState");
+		boolean isLogged = false;
+		if(obj != null)
+			isLogged = true;
+		
+		modelAndView.addObject("isLogged", isLogged);
+		modelAndView.addObject("keyword", keyword);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/tang-luot-xem", method = RequestMethod.POST)
+	public ResponseEntity<String> IncreaseView(@RequestParam(value = "id", required = true) long id){
+		if(id <= 0)
+			return new ResponseEntity<String>("Invalid", HttpStatus.BAD_REQUEST);
+		
+		if(bookServiceImpl.IncreaseView(id))
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		
+		return new ResponseEntity<String>("Failed", HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value = "/thich-sach", method = RequestMethod.POST)
+	public ResponseEntity<String> Upvote(@RequestParam(value = "id", required = true) long id){
+		if(id <= 0)
+			return new ResponseEntity<String>("Invalid", HttpStatus.BAD_REQUEST);
+		
+		if(bookServiceImpl.Upvote(id))
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		
+		return new ResponseEntity<String>("Failed", HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value = "/khong-thich-sach", method = RequestMethod.POST)
+	public ResponseEntity<String> Downvote(@RequestParam(value = "id", required = true) long id){
+		if(id <= 0)
+			return new ResponseEntity<String>("Invalid", HttpStatus.BAD_REQUEST);
+		
+		if(bookServiceImpl.Downvote(id))
+			return new ResponseEntity<String>("Success", HttpStatus.OK);
+		
+		return new ResponseEntity<String>("Failed", HttpStatus.NOT_FOUND);
 	}
 }

@@ -16,14 +16,14 @@
 					<i class="fa fa-search icon"></i>
 				</button>
 				<div class="row search-action sub-header" id="search">
-					<form action="/tim-kiem" method="get">
+					<form action="<c:url value="/tim-kiem-sach"></c:url>" method="get">
 						<div class="col-sm-8 col-xs-12 no-padding-right">
 							<div class="input-group">
 								<span class="input-group-btn"><button
 										class="btn btn-search" type="button">
 										<i class="fa fa-search icon"></i>
-									</button></span> <input type="text" name="input"
-									class="form-control search-book" placeholder="Search books...">
+									</button></span> <input type="text" name="keyword"
+									class="form-control search-book" placeholder="Tìm kiếm sách...">
 							</div>
 							<!-- /.input-group -->
 						</div>

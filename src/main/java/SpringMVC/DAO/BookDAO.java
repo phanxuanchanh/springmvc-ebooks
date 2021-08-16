@@ -87,6 +87,24 @@ public class BookDAO {
 		int affected = jdbcTemplate.update(query, new Object[] { id });
 		return (affected > 0);
 	}
+	
+	public boolean IncreaseView(long id) {
+		String query = "Update Book set views = views + 1 where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { id });
+		return (affected > 0);
+	}
+	
+	public boolean Upvote(long id) {
+		String query = "Update Book set upvote = upvote + 1 where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { id });
+		return (affected > 0);
+	}
+	
+	public boolean Downvote(long id) {
+		String query = "Update Book set downvote = downvote + 1 where Id = ?";
+		int affected = jdbcTemplate.update(query, new Object[] { id });
+		return (affected > 0);
+	}
 
 	public boolean DeleteBook(long id) {
 		String query = "Delete from Book where Id = ?";

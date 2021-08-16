@@ -29,9 +29,12 @@
 							</p>
 						</c:forEach>
 						<div class="star-rating">
-							<i class="fa fa-star color"></i> <i class="fa fa-star color"></i>
-							<i class="fa fa-star color"></i> <i class="fa fa-star color"></i>
-							<i class="fa fa-star color"></i>
+							<c:forEach var="i" begin="1" end="${ bookInfo.star }">
+								<i class="fa fa-star color"></i>
+							</c:forEach>
+							<c:forEach var="i" begin="1" end="${ 5 - bookInfo.star }">
+								<i class="fa fa-star"></i>
+							</c:forEach>
 						</div>
 						<!-- /.star-rating -->
 					</div>
@@ -43,10 +46,13 @@
 							<div class="pull-left col-md-6 col-sm-5 col-xs-12">
 								<div class="detail-book-price">
 									<c:if test="${ bookInfo.pdf == null }">
-										<a href="#pdf-not-found" class="price" onclick="showPDFNotFound();">Xem trực tuyến</a>
+										<a href="#pdf-not-found" class="price"
+											onclick="showPDFNotFound();">Xem trực tuyến</a>
 									</c:if>
 									<c:if test="${ bookInfo.pdf != null }">
-										<a href="<c:url value="/xem-sach-online/${ bookInfo.ID }"></c:url>" target="_blank" class="price">Xem trực tuyến</a>
+										<a
+											href="<c:url value="/xem-sach-online/${ bookInfo.ID }"></c:url>"
+											target="_blank" class="price">Xem trực tuyến</a>
 									</c:if>
 								</div>
 								<!-- /.detail-book-price -->
@@ -69,12 +75,12 @@
 									</c:if>
 									<button title="Thích"
 										class="hidden-xs btn btn-secondary btn-add-to-wishlist col-xs-2 "
-										type="button" onclick="upvote()">
+										type="button" onclick="upvote();">
 										<i class="far fa-thumbs-up"></i>
 									</button>
 									<button title="Không thích"
 										class="hidden-xs btn btn-secondary btn-add-to-wishlist col-xs-2 "
-										type="button" onclick="downvote()">
+										type="button" onclick="downvote();">
 										<i class="far fa-thumbs-down"></i>
 									</button>
 								</div>
@@ -171,10 +177,12 @@
 														href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">${ item.name }</a>
 												</h3>
 												<div class="star-rating">
-													<i class="fa fa-star color"></i> <i
-														class="fa fa-star color"></i> <i class="fa fa-star color"></i>
-													<i class="fa fa-star color"></i> <i
-														class="fa fa-star color"></i>
+													<c:forEach var="i" begin="1" end="${ item.star }">
+														<i class="fa fa-star color"></i>
+													</c:forEach>
+													<c:forEach var="i" begin="1" end="${ 5 - item.star }">
+														<i class="fa fa-star"></i>
+													</c:forEach>
 												</div>
 												<!-- /.star-rating -->
 
@@ -204,6 +212,38 @@
 	<!-- ========================================= RELATE BOOKS MODULE : END ========================================= -->
 </div>
 <!-- /.book-detail page -->
+
+<script type="text/javascript">
+	function upvote(){
+		$(document).ready(function(e){
+			$.post("<c:url value="/thich-sach"></c:url>", {
+				id : ${ bookInfo.ID }
+			}, function(data){
+				if(data == "Success")
+					alert("Bạn đã đánh giá thích sách thành công!");
+				else if(data == "Failed")
+					alert("Bạn đã đánh giá thích sách không thành công, hãy thử lại nhé!");
+				else
+					alert("Dữ liệu đầu vào không hợp lệ!");
+			});
+		});
+	}
+	
+	function downvote(){
+		$(document).ready(function(e){
+			$.post("<c:url value="/khong-thich-sach"></c:url>", {
+				id : ${ bookInfo.ID }
+			}, function(data){
+				if(data == "Success")
+					alert("Bạn đã đánh giá không thích sách thành công!");
+				else if(data == "Failed")
+					alert("Bạn đã đánh giá không thích sách không thành công, hãy thử lại nhé!");
+				else
+					alert("Dữ liệu đầu vào không hợp lệ!");
+			});
+		});
+	}
+</script>
 
 <c:if test="${ bookInfo.pdf == null }">
 	<script type="text/javascript">

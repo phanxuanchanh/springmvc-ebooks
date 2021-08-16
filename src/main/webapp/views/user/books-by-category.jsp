@@ -54,13 +54,16 @@
 
 												<div class="book-details">
 													<h3 class="book-title" style="font-size: 16px;">
-														<a href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">${ item.name }</a>
+														<a
+															href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">${ item.name }</a>
 													</h3>
 													<div class="star-rating">
-														<i class="fa fa-star color"></i> <i
-															class="fa fa-star color"></i> <i class="fa fa-star color"></i>
-														<i class="fa fa-star color"></i> <i
-															class="fa fa-star color"></i>
+														<c:forEach var="i" begin="1" end="${ item.star }">
+															<i class="fa fa-star color"></i>
+														</c:forEach>
+														<c:forEach var="i" begin="1" end="${ 5 - item.star }">
+															<i class="fa fa-star"></i>
+														</c:forEach>
 													</div>
 													<!-- /.star-rating -->
 

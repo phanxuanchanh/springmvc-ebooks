@@ -28,6 +28,7 @@
 
 <script src="<c:url value="/assets/pdfjs/build/pdf.js"></c:url>"></script>
 <script src="<c:url value="/assets/pdfjs/web/viewer.js"></c:url>"></script>
+<script src="<c:url value="/assets/user/jquery/jquery-1.12.1.min.js"></c:url>"></script>
 </head>
 
 <body tabindex="1">
@@ -526,5 +527,22 @@
 	</div>
 	<!-- outerContainer -->
 	<div id="printContainer"></div>
+	
+	<script type="text/javascript">
+		setTimeout(function(e){
+			$(document).ready(function(e){
+				$.post("<c:url value="/tang-luot-xem"></c:url>", {
+					id : ${ book.ID }
+				}, function(data){
+					if(data == "Success")
+						console.log("Đã tăng lượt xem thành công!");
+					else if(data == "Failed")
+						console.log("Tăng lượt xem thất bại!");
+					else
+						console.log("Dữ liệu đầu vào không hợp lệ!");
+				});
+			});
+		}, 10000);
+	</script>
 </body>
 </html>
