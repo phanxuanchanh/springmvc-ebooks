@@ -42,6 +42,13 @@ public class BookDAO {
 		books = jdbcTemplate.query(query, new BookMapper());
 		return books;
 	}
+	
+	public List<Book> GetBooksByKeyword(String keyword){
+		List<Book> books = new ArrayList<Book>();
+		String query = "Select * from Book where name like ?";
+		books = jdbcTemplate.query(query, new Object[] { "%" + keyword + "%" }, new BookMapper());
+		return books;
+	}
 
 	public Book GetBook(long id) {
 		Book book = null;

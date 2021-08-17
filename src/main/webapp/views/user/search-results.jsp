@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%@include file="/views/layouts/user/breadcrumb.jsp"%>
+
 <div class="cart page">
 	<div class="container">
 		<div class="page-header">
@@ -27,39 +29,39 @@
 					</thead>
 					<!-- /thead -->
 					<tbody class="cart-body-content">
+						<c:forEach var="item" items="${ booksByKeyword }">
+							<tr class="cart-book">
+								<td style="width: 50%;">
+									<div class="media">
+										<a href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>"
+											class="cart-thumbnail-image media-left">
+											<div class="book-cover small-book-cover">
 
-						<tr class="cart-book">
-							<td style="width: 50%;">
-								<div class="media">
-									<a href="/book-details/5-phuong-trinh-lam-thay-doi-the-gioi/5"
-										class="cart-thumbnail-image media-left">
-										<div class="book-cover small-book-cover">
-
-											<img
-												src="/FileUpload/Images/2021/6/5-phuong-trinh-lam-thay-doi-the-gioi-michael-guillen-ph-d.jpg"
-												alt="Thử nghiệm 3" class="media-object" width="72"
-												height="99">
-											<div class="fade"></div>
+												<img
+													src="<c:url value="/file-upload/images/${ item.img }"></c:url>"
+													alt="${ item.name }" class="media-object" width="72"
+													height="99">
+												<div class="fade"></div>
+											</div>
+										</a>
+										<div class="media-body">
+											<p class="media-heading" style="font-size: 16px;">
+												<a
+													href="<c:url value="/chi-tiet-sach/${ item.ID }"></c:url>">${ item.name }</a>
+											</p>
 										</div>
-									</a>
-									<div class="media-body">
-										<p class="media-heading" style="font-size: 16px;">
-											<a
-												href="/book-details/5-phuong-trinh-lam-thay-doi-the-gioi/5">5
-												phương trình làm thay đổi thế giới</a>
-										</p>
 									</div>
-								</div>
-							</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>
-								<p style="font-size: 16px">
-									<a href="/book-by-category/khoa-hoc/1/1">Khoa học</a>
-								</p>
-							</td>
-						</tr>
+								</td>
+								<td>${ item.views }</td>
+								<td>${ item.upvote }</td>
+								<td>${ item.downvote }</td>
+								<td>
+									<p style="font-size: 16px">
+										<a href="<c:url value="/sach-theo-the-loai/${ item.category.ID }"></c:url>">${ item.category.name }</a>
+									</p>
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 					<!-- /.cart-body-content -->
 				</table>

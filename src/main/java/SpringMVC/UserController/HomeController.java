@@ -146,8 +146,13 @@ public class HomeController {
 		if(obj != null)
 			isLogged = true;
 		
+		if(keyword.trim().length() == 0)
+			return new ModelAndView("redirect:/");
+		
 		modelAndView.addObject("isLogged", isLogged);
 		modelAndView.addObject("keyword", keyword);
+		modelAndView.addObject("bookNumber", bookServiceImpl.CountBook());
+		modelAndView.addObject("booksByKeyword", bookServiceImpl.GetBooksByKeyword(keyword));
 		return modelAndView;
 	}
 	

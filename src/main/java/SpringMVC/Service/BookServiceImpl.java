@@ -98,6 +98,24 @@ public class BookServiceImpl implements IBookService {
 		}
 		return bookInfos;
 	}
+	
+	public List<BookInfo> GetBooksByKeyword(String keyword){
+		List<Book> books = bookDAO.GetBooksByKeyword(keyword);
+		List<BookInfo> bookInfos = new ArrayList<BookInfo>();
+		for (Book book : books) {
+			if(book.getImg() == null)
+				book.setImg("book-default.png");
+			
+			if(book.getImg().trim().length() == 0)
+				book.setImg("book-default.png");
+			
+			Category category = categoryDAO.GetCategory(book.getCategoryId());
+			StarRating starRating = new StarRating(book.getUpvote(), book.getDownvote());
+			bookInfos.add(new BookInfo(book.getID(), book.getName(), book.getDescription(), category, null, null,
+					book.getViews(), book.getUpvote(), book.getDownvote(), starRating.SolveStar(), book.getPdf(), book.getImg()));
+		}
+		return bookInfos;
+	}
 
 	public Book GetBook(long id) {
 		if (bookDAO.IsExistBookById(id)) {

@@ -23,11 +23,6 @@
 				<div class="col-sm-8">
 					<div class="book-detail-header">
 						<h2 class="book-title">${ bookInfo.name }</h2>
-						<c:forEach var="item" items="${ bookInfo.bookAuthorInfos }">
-							<p class="book-author">
-								${ item.roleName }: <span class="book-author-name">${ item.name }</span>
-							</p>
-						</c:forEach>
 						<div class="star-rating">
 							<c:forEach var="i" begin="1" end="${ bookInfo.star }">
 								<i class="fa fa-star color"></i>
@@ -93,11 +88,15 @@
 						<div class="clearfix"></div>
 
 						<div class="product-description">
+							<h3>Tác giả và các vai trò khác</h3>
+							<c:forEach var="item" items="${ bookInfo.bookAuthorInfos }">
+								<p class="book-author">
+									${ item.roleName }: <span class="book-author-name">${ item.name }</span>
+								</p>
+							</c:forEach>
 							<h3>Thể loại, nhà xuất bản</h3>
 							<p class="text-justify">Thể loại: ${ bookInfo.category.name }</p>
 							<p class="text-justify">Nhà xuất bản: ${ bookInfo.publishingHouse.name }</p>
-							<h3>Mô tả</h3>
-							<p class="text-justify">${ bookInfo.description }</p>
 						</div>
 						<!-- /.product-description -->
 
@@ -107,6 +106,13 @@
 				<!-- /.col -->
 			</div>
 			<!-- /.row -->
+
+			<div class="row">
+				<div class="col-sm-12 product-description">
+					<h3>Mô tả</h3>
+					<p class="text-justify">${ bookInfo.description }</p>
+				</div>
+			</div>
 
 			<div class="tab-holder clearfix">
 				<div class="book-additional-details"></div>
