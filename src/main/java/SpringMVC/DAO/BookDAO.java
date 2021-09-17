@@ -14,7 +14,7 @@ import SpringMVC.Entity.BookMapper;
 public class BookDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
+	
 	public List<Book> GetBooks() {
 		List<Book> books = new ArrayList<Book>();
 		String query = "Select * from Book";

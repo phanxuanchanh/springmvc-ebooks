@@ -21,7 +21,7 @@ public class UserDAO {
 		users = jdbcTemplate.query(query, new UserMapper());
 		return users;
 	}
-
+	
 	public User GetUser(String username) {
 		User user = null;
 		String query = "Select * from [User] where username = ?";
@@ -49,9 +49,9 @@ public class UserDAO {
 		return (affected > 0);
 	}*/
 
-	public boolean DeleteUser(String username) {
+	public boolean DeleteUser(String userId) {
 		String query = "Delete from [User] where Id = ?";
-		int affected = jdbcTemplate.update(query, new Object[] { username });
+		int affected = jdbcTemplate.update(query, new Object[] { userId });
 		return (affected > 0);
 	}
 
